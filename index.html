@@ -1,434 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Varun Kumar S R — ECE Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#080C1A;--bg2:#0D1225;--card:#111827;--border:#1E2D45;
+  --accent:#00D4FF;--accent2:#0099CC;--text:#E8EDF5;--muted:#7A8BAA;
+  --white:#fff;--green:#00FF88;--yellow:#FFD700;--red:#FF5F57;
+  --font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px;}
+
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:1.5rem;padding:1rem 2.5rem;background:rgba(8,12,26,0.8);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,212,255,0.07);transition:all 0.3s;}
+#navbar.scrolled{padding:0.65rem 2.5rem;background:rgba(8,12,26,0.97);}
+.nav-logo{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-right:auto;}
+.nav-logo .accent{color:var(--accent);}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{font-size:0.85rem;font-weight:500;color:var(--muted);transition:color 0.2s;padding:0.3rem 0.7rem;border-radius:20px;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(0,212,255,0.08);}
+.nav-icons{display:flex;gap:0.8rem;align-items:center;}
+.nav-icons a{color:var(--muted);transition:color 0.2s;display:flex;}
+.nav-icons a:hover{color:var(--accent);}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:7rem 2.5rem 4rem;position:relative;overflow:hidden;gap:4rem;}
+.hero-bg{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:50px 50px;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 80% 50%,rgba(0,212,255,0.05) 0%,transparent 60%);}
+#hero>*{position:relative;z-index:1;}
+.hero-left{flex:1;max-width:560px;}
+.hero-avail{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--accent);margin-bottom:1.2rem;background:rgba(0,212,255,0.06);padding:0.3rem 0.9rem;border-radius:20px;border:1px solid rgba(0,212,255,0.2);}
+.hero-avail-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero-hi{font-size:1.1rem;color:var(--muted);margin-bottom:0.4rem;}
+.hero-name{font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:700;color:var(--white);letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.5rem;}
+.hero-role{font-family:var(--font-mono);font-size:1.15rem;color:var(--accent);margin-bottom:1.2rem;min-height:1.8rem;}
+.hero-role .cursor{animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:480px;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:0.9rem;align-items:center;}
+.btn-primary{padding:0.75rem 1.8rem;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;border-radius:8px;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;}
+.btn-primary:hover{background:#33DDFF;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,0.3);}
+.btn-secondary{padding:0.75rem 1.6rem;border:1px solid var(--border);color:var(--text);font-size:0.9rem;border-radius:8px;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.btn-text{color:var(--muted);font-size:0.9rem;display:inline-flex;align-items:center;gap:0.3rem;transition:color 0.2s;}
+.btn-text:hover{color:var(--accent);}
+
+/* HERO PHOTO */
+.hero-right{flex:0 0 auto;position:relative;width:360px;}
+.hero-photo-wrap{position:relative;width:340px;height:420px;}
+.hero-photo-glow{position:absolute;inset:-2px;border-radius:20px;background:linear-gradient(135deg,var(--accent),transparent 60%);opacity:0.3;z-index:0;}
+.hero-photo{width:100%;height:100%;object-fit:cover;border-radius:18px;position:relative;z-index:1;filter:grayscale(15%);}
+.hero-badge{position:absolute;display:flex;align-items:center;gap:0.5rem;background:rgba(13,18,37,0.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;padding:0.5rem 0.9rem;font-family:var(--font-mono);font-size:0.72rem;color:var(--text);font-weight:600;letter-spacing:0.05em;z-index:2;white-space:nowrap;}
+.hero-badge .badge-icon{font-size:1rem;}
+.badge-top{top:-16px;left:-30px;}
+.badge-mid{right:-30px;top:45%;}
+.badge-bot{bottom:20px;right:-20px;}
+
+/* SECTION BASE */
+.section{padding:5.5rem 2.5rem;}
+.section-dark{background:var(--bg2);}
+.container{max-width:1100px;margin:0 auto;}
+.sec-label{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent);letter-spacing:0.12em;margin-bottom:0.8rem;}
+.sec-title{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-bottom:2.8rem;}
+.accent{color:var(--accent);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.about-text h2{font-family:var(--font-display);font-size:clamp(1.5rem,2.5vw,2rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;line-height:1.25;margin-bottom:1.3rem;}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1.1rem;font-size:0.95rem;}
+.about-stats{display:flex;gap:2.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);}
+.stat-num{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:var(--accent);}
+.stat-label{font-size:0.78rem;color:var(--muted);}
+.about-cards{display:flex;flex-direction:column;gap:0.9rem;}
+.acard{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;}
+.acard:hover{border-color:rgba(0,212,255,0.3);}
+.acard-icon{font-size:1.3rem;}
+.acard-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.acard-val{font-size:0.9rem;color:var(--text);font-weight:500;margin-top:2px;}
+.acard-val a{color:var(--accent);}
+.acard-meta{font-size:0.78rem;color:var(--muted);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:border-color 0.2s,transform 0.2s;}
+.skill-card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-2px);}
+.skill-card-title{font-family:var(--font-display);font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.9rem;display:flex;align-items:center;gap:0.5rem;}
+.stags{display:flex;flex-wrap:wrap;gap:0.35rem;}
+.stags span{font-family:var(--font-mono);font-size:0.7rem;padding:0.22rem 0.55rem;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:4px;color:var(--muted);}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.4rem;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;display:flex;flex-direction:column;gap:0.7rem;position:relative;}
+.pcard:hover{border-color:rgba(0,212,255,0.35);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,0.07);}
+.pcard.featured{grid-column:span 2;border-color:rgba(0,212,255,0.2);background:linear-gradient(135deg,var(--card),rgba(0,212,255,0.04));}
+.pbadge{position:absolute;top:0.9rem;right:0.9rem;font-family:var(--font-mono);font-size:0.62rem;padding:0.18rem 0.55rem;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);border-radius:20px;color:var(--accent);}
+.phead{display:flex;justify-content:space-between;align-items:center;}
+.picon{font-size:1.7rem;}
+.plink a{color:var(--muted);transition:color 0.2s;}
+.plink a:hover{color:var(--accent);}
+.pcard h3{font-family:var(--font-display);font-size:0.97rem;font-weight:600;color:var(--white);line-height:1.3;}
+.pcard p{font-size:0.845rem;color:var(--muted);line-height:1.7;flex:1;}
+.ptags{display:flex;flex-wrap:wrap;gap:0.35rem;}
+.ptags span{font-family:var(--font-mono);font-size:0.66rem;padding:0.18rem 0.5rem;background:rgba(0,212,255,0.04);border:1px solid var(--border);border-radius:4px;color:var(--muted);}
+.pcta{text-align:center;margin-top:2.5rem;}
+
+/* EDUCATION */
+.edu-grid{display:flex;flex-direction:column;gap:1.2rem;}
+.edu-card{display:flex;align-items:flex-start;gap:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s;}
+.edu-card:hover{border-color:rgba(0,212,255,0.3);}
+.edu-icon{font-size:2rem;flex-shrink:0;}
+.edu-year{font-family:var(--font-mono);font-size:0.75rem;color:var(--accent);letter-spacing:0.05em;margin-bottom:0.3rem;}
+.edu-degree{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:0.2rem;}
+.edu-inst{font-size:0.88rem;color:var(--muted);}
+.edu-score{font-family:var(--font-mono);font-size:0.8rem;color:var(--green);margin-top:0.4rem;}
+
+/* GITHUB ACTIVITY */
+.github-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;overflow:hidden;}
+.github-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.github-header h3{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--white);display:flex;align-items:center;gap:0.6rem;}
+.github-link{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent);}
+.github-graph{width:100%;overflow-x:auto;}
+.github-graph img{width:100%;border-radius:8px;filter:invert(0);opacity:0.9;}
+.github-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.5rem;}
+.gstat{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
+.gstat-num{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--accent);}
+.gstat-label{font-size:0.75rem;color:var(--muted);margin-top:0.2rem;}
+
+/* CERTIFICATIONS */
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.cert-card{display:flex;gap:0.9rem;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:border-color 0.2s,transform 0.2s;}
+.cert-card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-2px);}
+.cert-card.hack{border-color:rgba(255,215,0,0.12);}
+.cert-card.hack:hover{border-color:rgba(255,215,0,0.3);}
+.cert-icon{font-size:1.5rem;flex-shrink:0;}
+.cert-platform{font-family:var(--font-mono);font-size:0.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;}
+.cert-card.hack .cert-platform{color:var(--yellow);}
+.cert-title{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.35rem;line-height:1.35;}
+.cert-sub{font-size:0.75rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;}
+.cert-link{font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);}
+.cert-link:hover{opacity:0.7;}
+
+/* CONTACT */
+.contact-center{text-align:center;max-width:680px;margin:0 auto;}
+.contact-center h2{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-bottom:1rem;line-height:1.2;}
+.contact-center p{color:var(--muted);font-size:0.97rem;margin-bottom:2.8rem;line-height:1.75;}
+.contact-cards{display:flex;justify-content:center;flex-wrap:wrap;gap:1.2rem;}
+.ccard{display:flex;flex-direction:column;align-items:center;gap:0.45rem;padding:1.4rem 1.8rem;background:var(--card);border:1px solid var(--border);border-radius:10px;min-width:170px;transition:all 0.2s;}
+.ccard:hover{border-color:rgba(0,212,255,0.4);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,212,255,0.08);}
+.ccard-icon{font-size:1.7rem;color:var(--accent);}
+.ccard-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.ccard-val{font-size:0.82rem;color:var(--text);font-weight:500;}
+
+/* FOOTER */
+footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);}
+.footer-inner a{color:var(--accent);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .nav-links{display:none;}.hamburger{display:block;}
+  #hero{flex-direction:column;padding-top:8rem;gap:3rem;}
+  .hero-right{width:100%;display:flex;justify-content:center;}
+  .hero-photo-wrap{width:260px;height:320px;}
+  .badge-top{left:-10px;}.badge-mid{right:-10px;}.badge-bot{right:-5px;}
+  .about-grid{grid-template-columns:1fr;gap:2rem;}
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
+  .projects-grid{grid-template-columns:1fr;}
+  .pcard.featured{grid-column:span 1;}
+  .cert-grid{grid-template-columns:1fr;}
+  .github-stats{grid-template-columns:repeat(2,1fr);}
+  .contact-cards{flex-direction:column;align-items:center;}
+}
+@media(max-width:600px){
+  .section{padding:3.5rem 1.2rem;}#navbar{padding:0.85rem 1.2rem;}
+  .skills-grid{grid-template-columns:1fr;}
+  .about-stats{gap:1.5rem;}
+  .hero-btns{flex-direction:column;align-items:flex-start;}
+  .github-stats{grid-template-columns:repeat(2,1fr);}
+}
+.nav-links.open{display:flex;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:var(--bg2);padding:1.3rem 2rem;border-bottom:1px solid var(--border);z-index:99;}
+
+/* btn outline */
+.btn-outline{display:inline-block;padding:0.75rem 2rem;border:1px solid var(--accent);color:var(--accent);font-weight:600;border-radius:8px;transition:all 0.2s;font-family:var(--font-mono);font-size:0.88rem;}
+.btn-outline:hover{background:var(--accent);color:var(--bg);}
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-logo">VK<span class="accent">.</span></div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#certifications">Certifications</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="https://github.com/VK-Innovate" target="_blank" class="nav-cta">GitHub</a>
-    <button class="hamburger" id="hamburger">&#9776;</button>
-  </nav>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">VK<span class="accent">.</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-icons">
+    <a href="https://github.com/VK-Innovate" target="_blank" title="GitHub">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+    </a>
+    <a href="mailto:varunkumarsr43@gmail.com" title="Email">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+  </div>
+  <button class="hamburger" id="hamburger">&#9776;</button>
+</nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="circuit-bg"></div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="dot"></span> Available for Internships
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="hero-avail"><span class="hero-avail-dot"></span> Available for Placement &amp; Internship Roles</div>
+    <p class="hero-hi">Hi, my name is</p>
+    <h1 class="hero-name">Varun Kumar S R</h1>
+    <p class="hero-role"><span id="typed-role"></span><span class="cursor">|</span></p>
+    <p class="hero-desc">Building intelligent embedded systems, secure IoT solutions, and hardware-software integrated products from the ground up.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="varun_resume.pdf" download class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+      <a href="#contact" class="btn-text">Contact Me ↗</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-glow"></div>
+      <img src="varun.png" alt="Varun Kumar S R" class="hero-photo"/>
+      <div class="hero-badge badge-top"><span class="badge-icon">⚡</span> ECE ENGINEER</div>
+      <div class="hero-badge badge-mid"><span class="badge-icon">🔐</span> SECURITY</div>
+      <div class="hero-badge badge-bot"><span class="badge-icon">📡</span> IOT BUILDER</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section section-dark">
+  <div class="container">
+    <div class="sec-label">// 01 ABOUT</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>Engineering at the<br><span class="accent">hardware-software</span> boundary.</h2>
+        <p>I'm a final-year Electronics and Communication Engineering student at Maharaja Institute of Technology Mysore, building systems where firmware meets the physical world.</p>
+        <p>My work spans from designing PCB schematics in EasyEDA, flashing ESP32s with custom sensor pipelines, to implementing post-quantum cryptographic protocols in mobile apps. I care about systems that are both functional and secure.</p>
+        <p>Currently seeking internship opportunities in IoT, Embedded Systems, or Hardware Engineering.</p>
+        <div class="about-stats">
+          <div><div class="stat-num">7+</div><div class="stat-label">GitHub Projects</div></div>
+          <div><div class="stat-num">3</div><div class="stat-label">Certifications</div></div>
+          <div><div class="stat-num">2</div><div class="stat-label">Hackathons</div></div>
+          <div><div class="stat-num">6.5</div><div class="stat-label">Current CGPA</div></div>
+        </div>
       </div>
-      <h1 class="hero-title">
-        <span id="typed-name"></span><span class="cursor">_</span>
-      </h1>
-      <p class="hero-subtitle">Electronics &amp; Communication Engineer</p>
-      <p class="hero-desc">
-        Building intelligent embedded systems, secure IoT solutions,<br>
-        and hardware-software integrated products from the ground up.
-      </p>
-      <div class="hero-tags">
-        <span>ESP32</span><span>IoT</span><span>PCB Design</span><span>Post-Quantum Cryptography</span><span>Robotics</span>
-      </div>
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="https://github.com/VK-Innovate" target="_blank" class="btn-ghost">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/vk-innovate/" target="_blank" class="btn-ghost">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
+      <div class="about-cards">
+        <div class="acard reveal"><div class="acard-icon">🎓</div><div><div class="acard-label">Education</div><div class="acard-val">B.E. ECE — MITM, Mysore</div><div class="acard-meta">Expected 2027</div></div></div>
+        <div class="acard reveal"><div class="acard-icon">📍</div><div><div class="acard-label">Location</div><div class="acard-val">Mysore, Karnataka, India</div></div></div>
+        <div class="acard reveal"><div class="acard-icon">📧</div><div><div class="acard-label">Email</div><div class="acard-val"><a href="mailto:varunkumarsr43@gmail.com">varunkumarsr43@gmail.com</a></div></div></div>
+        <div class="acard reveal"><div class="acard-icon">⚡</div><div><div class="acard-label">Domains</div><div class="acard-val">IoT · Embedded · Cybersecurity · AI</div></div></div>
+        <div class="acard reveal"><div class="acard-icon">🌐</div><div><div class="acard-label">Branch</div><div class="acard-val">Electronics &amp; Communication Engineering</div></div></div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="terminal">
-        <div class="terminal-bar">
-          <span class="t-dot red"></span>
-          <span class="t-dot yellow"></span>
-          <span class="t-dot green"></span>
-          <span class="t-title">vk@embedded:~</span>
-        </div>
-        <div class="terminal-body">
-          <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">cat profile.json</span></div>
-          <div class="t-output">{</div>
-          <div class="t-output">&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-val">"Varun Kumar S R"</span>,</div>
-          <div class="t-output">&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-val">"ECE Engineer"</span>,</div>
-          <div class="t-output">&nbsp;&nbsp;<span class="t-key">"focus"</span>: [</div>
-          <div class="t-output">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-val">"Embedded Systems"</span>,</div>
-          <div class="t-output">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-val">"IoT"</span>,</div>
-          <div class="t-output">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-val">"Post-Quantum Crypto"</span></div>
-          <div class="t-output">&nbsp;&nbsp;],</div>
-          <div class="t-output">&nbsp;&nbsp;<span class="t-key">"projects"</span>: <span class="t-num">7</span>,</div>
-          <div class="t-output">&nbsp;&nbsp;<span class="t-key">"status"</span>: <span class="t-val">"open_to_internships"</span></div>
-          <div class="t-output">}</div>
-          <div class="t-line"><span class="t-prompt">$</span> <span class="t-blink">█</span></div>
-        </div>
-      </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="container">
+    <div class="sec-label">// 02 SKILLS</div>
+    <h2 class="sec-title">Technical Stack</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal"><div class="skill-card-title">🔧 Microcontrollers</div><div class="stags"><span>ESP32</span><span>ESP8266</span><span>Arduino Mega</span><span>Arduino Nano</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-title">💻 Programming</div><div class="stags"><span>C</span><span>Embedded C</span><span>Python</span><span>JavaScript</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-title">📡 Protocols</div><div class="stags"><span>UART</span><span>SPI</span><span>I2C</span><span>ESP-NOW</span><span>OneWire</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-title">🔐 Security</div><div class="stags"><span>AES-256-GCM</span><span>CRYSTALS-Kyber</span><span>Dilithium</span><span>PQC</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-title">🖥️ PCB & Design</div><div class="stags"><span>EasyEDA</span><span>KiCad</span><span>Schematic Design</span><span>PCB Layout</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-title">☁️ Backend & Tools</div><div class="stags"><span>Firebase</span><span>Supabase</span><span>Node.js</span><span>Flask</span><span>Git</span><span>GitHub</span></div></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="container">
-      <div class="section-label">// 01 ABOUT</div>
-      <div class="about-grid">
-        <div class="about-text">
-          <h2>Engineering at the<br><span class="accent">hardware-software</span> boundary.</h2>
-          <p>I'm a final-year Electronics and Communication Engineering student at Maharaja Institute of Technology Mysore, building systems where firmware meets the physical world.</p>
-          <p>My work spans from designing PCB schematics in EasyEDA, flashing ESP32s with custom sensor pipelines, to implementing post-quantum cryptographic protocols in mobile apps. I care about systems that are both functional and secure.</p>
-          <p>Currently seeking internship opportunities in IoT, Embedded Systems, or Hardware Engineering.</p>
-          <div class="about-stats">
-            <div class="stat"><span class="stat-num">7+</span><span class="stat-label">GitHub Projects</span></div>
-            <div class="stat"><span class="stat-num">3+</span><span class="stat-label">Certifications</span></div>
-            <div class="stat"><span class="stat-num">2</span><span class="stat-label">Hackathons</span></div>
-          </div>
-        </div>
-        <div class="about-details">
-          <div class="detail-card">
-            <div class="detail-icon">🎓</div>
-            <div>
-              <div class="detail-title">Education</div>
-              <div class="detail-sub">B.E. ECE — MITM, Mysore</div>
-              <div class="detail-meta">Expected 2027</div>
-            </div>
-          </div>
-          <div class="detail-card">
-            <div class="detail-icon">📍</div>
-            <div>
-              <div class="detail-title">Location</div>
-              <div class="detail-sub">Mysore, Karnataka, India</div>
-            </div>
-          </div>
-          <div class="detail-card">
-            <div class="detail-icon">📧</div>
-            <div>
-              <div class="detail-title">Email</div>
-              <div class="detail-sub"><a href="mailto:varunkumarsr43@gmail.com">varunkumarsr43@gmail.com</a></div>
-            </div>
-          </div>
-          <div class="detail-card">
-            <div class="detail-icon">⚡</div>
-            <div>
-              <div class="detail-title">Domains</div>
-              <div class="detail-sub">IoT · Embedded · Cybersecurity · AI</div>
-            </div>
-          </div>
-        </div>
+<!-- PROJECTS -->
+<section id="projects" class="section section-dark">
+  <div class="container">
+    <div class="sec-label">// 03 PROJECTS</div>
+    <h2 class="sec-title">What I've Built</h2>
+    <div class="projects-grid">
+
+      <div class="pcard featured reveal">
+        <div class="pbadge">Featured</div>
+        <div class="phead"><div class="picon">🔐</div><div class="plink"><a href="https://github.com/VK-Innovate/QSC_App" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>Quantum Secure Communication App</h3>
+        <p>Cross-platform secure messaging with Post-Quantum Cryptography. Implements CRYSTALS-Kyber key exchange, Dilithium signatures, and AES-256-GCM with real-time Supabase sync and ephemeral message expiry.</p>
+        <div class="ptags"><span>React Native</span><span>Node.js</span><span>Supabase</span><span>PQC</span><span>AES-256-GCM</span></div>
       </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">📡</div><div class="plink"><a href="https://github.com/VK-Innovate/RF-scanner-app" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>RF Scanner App</h3>
+        <p>Android app + Flask cloud server for real-time WiFi scanning. DNN inference server-side, RSSI/distance live dashboard updated every 30 seconds.</p>
+        <div class="ptags"><span>Python</span><span>Flask</span><span>Kivy</span><span>Android</span><span>DNN</span></div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">🤚</div><div class="plink"><a href="https://github.com/VK-Innovate/dsp-gesture-controller" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>DSP Gesture Controller</h3>
+        <p>Hand gesture recognition using Python, MediaPipe and IIR/FIR filters. Controls PC via gestures with 8-frame stability and 2.5s action lock. PowerShell one-liner installer.</p>
+        <div class="ptags"><span>Python</span><span>MediaPipe</span><span>IIR/FIR</span><span>OpenCV</span><span>DSP</span></div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">🔒</div><div class="plink"><a href="https://github.com/VK-Innovate/Smart-Biometric-Multi-Lock-IoT-System" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>Smart Biometric Multi-Lock</h3>
+        <p>Multi-user fingerprint + PIN system on Arduino Mega. 3 independent solenoid locks, role-based access control, EEPROM credential storage, EasyEDA PCB design.</p>
+        <div class="ptags"><span>Arduino Mega</span><span>EEPROM</span><span>I2C</span><span>EasyEDA</span></div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">⚡</div><div class="plink"><a href="https://github.com/VK-Innovate/Smart-Overvoltage-Protection-System" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>Smart Overvoltage Protection</h3>
+        <p>Motor protection using MOSFET switching and dual-threshold hysteresis. Automatic cutoff and recovery with ADC-based voltage sensing and I2C LCD display.</p>
+        <div class="ptags"><span>Arduino Nano</span><span>MOSFET</span><span>ADC</span><span>Embedded C</span></div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">📶</div><div class="plink"><a href="https://github.com/VK-Innovate/wifi-scanner" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>WiFi Scanner</h3>
+        <p>ESP32-based network scanning tool. Detects nearby access points, shows SSID, BSSID, channel, and RSSI in real time. Built for wireless security auditing.</p>
+        <div class="ptags"><span>ESP32</span><span>Python</span><span>Network Analysis</span></div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">🧠</div><div class="plink"><a href="https://github.com/VK-Innovate/ANN-SOM" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <h3>ANN-SOM Neural Clustering</h3>
+        <p>Self-Organizing Map on the Iris dataset using MiniSom. Unsupervised ML, topology preservation, and high-dimensional data visualization in Jupyter.</p>
+        <div class="ptags"><span>Python</span><span>MiniSom</span><span>Jupyter</span><span>ML</span></div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="phead"><div class="picon">🌿</div><div class="plink"></div></div>
+        <h3>Smart Animal Weather Monitor</h3>
+        <p>Multi-parameter IoT monitoring for livestock shelters. 6 sensors (DHT11, DS18B20, BMP180, MQ135, GP2Y1010, LDR) with OLED display and mixed protocol interfacing.</p>
+        <div class="ptags"><span>ESP32</span><span>I2C</span><span>OneWire</span><span>OLED</span></div>
+      </div>
+
     </div>
-  </section>
+    <div class="pcta"><a href="https://github.com/VK-Innovate" target="_blank" class="btn-outline">View All on GitHub →</a></div>
+  </div>
+</section>
 
-  <!-- SKILLS -->
-  <section id="skills" class="section section-dark">
-    <div class="container">
-      <div class="section-label">// 02 SKILLS</div>
-      <h2 class="section-title">Technical Stack</h2>
-      <div class="skills-grid">
-        <div class="skill-group reveal">
-          <div class="skill-group-title">
-            <span class="skill-icon">🔧</span> Microcontrollers
-          </div>
-          <div class="skill-tags">
-            <span>ESP32</span><span>ESP8266</span><span>Arduino Mega</span><span>Arduino Nano</span><span>STM32</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <div class="skill-group-title">
-            <span class="skill-icon">💻</span> Programming
-          </div>
-          <div class="skill-tags">
-            <span>C</span><span>Python</span><span>Embedded C</span><span>Arduino IDE</span><span>JavaScript</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <div class="skill-group-title">
-            <span class="skill-icon">📡</span> Protocols
-          </div>
-          <div class="skill-tags">
-            <span>UART</span><span>SPI</span><span>I2C</span><span>ESP-NOW</span><span>OneWire</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <div class="skill-group-title">
-            <span class="skill-icon">🔐</span> Security
-          </div>
-          <div class="skill-tags">
-            <span>AES-256-GCM</span><span>CRYSTALS-Kyber</span><span>Dilithium</span><span>Post-Quantum Crypto</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <div class="skill-group-title">
-            <span class="skill-icon">🖥️</span> PCB & Design
-          </div>
-          <div class="skill-tags">
-            <span>EasyEDA</span><span>KiCad</span><span>Schematic Design</span><span>PCB Layout</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <div class="skill-group-title">
-            <span class="skill-icon">☁️</span> Backend & Tools
-          </div>
-          <div class="skill-tags">
-            <span>Firebase</span><span>Supabase</span><span>Node.js</span><span>Flask</span><span>Git</span><span>GitHub</span>
-          </div>
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="container">
+    <div class="sec-label">// 04 EDUCATION</div>
+    <h2 class="sec-title">Academic Background</h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-year">2023 — 2027</div>
+          <div class="edu-degree">Bachelor of Engineering — Electronics &amp; Communication</div>
+          <div class="edu-inst">Maharaja Institute of Technology Mysore, Karnataka</div>
+          <div class="edu-score">CGPA: 6.5</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="section">
-    <div class="container">
-      <div class="section-label">// 03 PROJECTS</div>
-      <h2 class="section-title">What I've Built</h2>
-      <div class="projects-grid">
-
-        <div class="project-card featured reveal">
-          <div class="project-badge">Featured</div>
-          <div class="project-header">
-            <div class="project-icon">🔐</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/QSC_App" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>Quantum Secure Communication App</h3>
-          <p>Cross-platform secure messaging with Post-Quantum Cryptography. Implements CRYSTALS-Kyber key exchange, Dilithium signatures, and AES-256-GCM encryption with real-time Supabase sync.</p>
-          <div class="project-tags">
-            <span>React Native</span><span>Node.js</span><span>Supabase</span><span>PQC</span><span>AES-256-GCM</span>
-          </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon">📚</div>
+        <div>
+          <div class="edu-year">2020 — 2022</div>
+          <div class="edu-degree">Pre-University Course — PCMB</div>
+          <div class="edu-inst">JSS Pre-University College, Mysore</div>
+          <div class="edu-score">Percentage: 65.67%</div>
         </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">📡</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/RF-scanner-app" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>RF Scanner App</h3>
-          <p>Android app + Flask cloud server for real-time WiFi scanning. Runs DNN inference server-side, pushes RSSI/distance data to a live shared dashboard every 30 seconds.</p>
-          <div class="project-tags">
-            <span>Python</span><span>Flask</span><span>Kivy</span><span>Android</span><span>DNN</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">🤚</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/dsp-gesture-controller" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>DSP Gesture Controller</h3>
-          <p>Hand gesture recognition using Python, MediaPipe, and IIR/FIR digital filters. Controls your computer via real-time gesture detection with 8-frame stability and 2.5s action lock.</p>
-          <div class="project-tags">
-            <span>Python</span><span>MediaPipe</span><span>IIR/FIR</span><span>OpenCV</span><span>DSP</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">🔒</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/Smart-Biometric-Multi-Lock-IoT-System" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>Smart Biometric Multi-Lock</h3>
-          <p>Multi-user fingerprint + PIN access system on Arduino Mega. Supports 3 independent solenoid locks, role-based access control, and EEPROM-based credential storage.</p>
-          <div class="project-tags">
-            <span>Arduino Mega</span><span>EEPROM</span><span>I2C</span><span>UART</span><span>EasyEDA</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">⚡</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/Smart-Overvoltage-Protection-System" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>Smart Overvoltage Protection</h3>
-          <p>Motor protection system using MOSFET switching and dual-threshold hysteresis logic. Prevents unstable switching near overvoltage conditions with automatic cutoff and recovery.</p>
-          <div class="project-tags">
-            <span>Arduino Nano</span><span>MOSFET</span><span>ADC</span><span>I2C LCD</span><span>Embedded C</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">📶</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/wifi-scanner" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>WiFi Scanner</h3>
-          <p>Network scanning and monitoring tool built on ESP32. Detects nearby access points, displays SSID, BSSID, channel, and RSSI signal strength in real time for wireless security auditing.</p>
-          <div class="project-tags">
-            <span>ESP32</span><span>Python</span><span>Network Analysis</span><span>RSSI</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">🧠</div>
-            <div class="project-links">
-              <a href="https://github.com/VK-Innovate/ANN-SOM" target="_blank" title="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>ANN-SOM — Neural Clustering</h3>
-          <p>Self-Organizing Map (SOM) on the Iris dataset using MiniSom. Explores unsupervised ML, neural network topology preservation, and high-dimensional data visualization.</p>
-          <div class="project-tags">
-            <span>Python</span><span>MiniSom</span><span>Jupyter</span><span>Unsupervised ML</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-header">
-            <div class="project-icon">🌿</div>
-            <div class="project-links"></div>
-          </div>
-          <h3>Smart Animal Weather Monitor</h3>
-          <p>Multi-parameter IoT monitoring for livestock shelters. Integrates 6 sensors (DHT11, DS18B20, BMP180, MQ135, GP2Y1010, LDR) with real-time OLED display and mixed protocol interfacing.</p>
-          <div class="project-tags">
-            <span>ESP32</span><span>I2C</span><span>OneWire</span><span>OLED</span><span>ADC</span>
-          </div>
-        </div>
-
       </div>
-      <div class="projects-cta">
-        <a href="https://github.com/VK-Innovate" target="_blank" class="btn-outline">
-          View All on GitHub →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section id="certifications" class="section section-dark">
-    <div class="container">
-      <div class="section-label">// 04 CERTIFICATIONS & HACKATHONS</div>
-      <h2 class="section-title">Recognition & Learning</h2>
-      <div class="cert-grid">
-        <div class="cert-card reveal">
-          <div class="cert-icon">📘</div>
-          <div class="cert-body">
-            <div class="cert-platform">Coursera</div>
-            <div class="cert-title">Pressure, Force, Motion & Humidity Sensors</div>
-            <div class="cert-focus">Sensor fundamentals, IoT applications, Environmental monitoring</div>
-            <a href="https://coursera.org/share/2fc07062b46194be0b2a345dd22ff695" target="_blank" class="cert-link">View Certificate ↗</a>
-          </div>
-        </div>
-        <div class="cert-card reveal">
-          <div class="cert-icon">📊</div>
-          <div class="cert-body">
-            <div class="cert-platform">Coursera</div>
-            <div class="cert-title">Probability and Statistics</div>
-            <div class="cert-focus">Statistical analysis, Probability theory fundamentals</div>
-            <a href="https://coursera.org/share/62a70cc47b5f9246bfe71efe38bef3c4" target="_blank" class="cert-link">View Certificate ↗</a>
-          </div>
-        </div>
-        <div class="cert-card reveal">
-          <div class="cert-icon">🌐</div>
-          <div class="cert-body">
-            <div class="cert-platform">Coursera</div>
-            <div class="cert-title">Computer Networks & Network Security</div>
-            <div class="cert-focus">Networking fundamentals, Security concepts</div>
-            <a href="https://coursera.org/share/390ef51a1946cb846e0359cb7aa44234" target="_blank" class="cert-link">View Certificate ↗</a>
-          </div>
-        </div>
-        <div class="cert-card hackathon reveal">
-          <div class="cert-icon">🏆</div>
-          <div class="cert-body">
-            <div class="cert-platform">Smart India Hackathon</div>
-            <div class="cert-title">Hardware Category — SIH</div>
-            <div class="cert-focus">AI-based precision pesticide drone with RTK-GPS targeting</div>
-            <a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a>
-          </div>
-        </div>
-        <div class="cert-card hackathon reveal">
-          <div class="cert-icon">🚀</div>
-          <div class="cert-body">
-            <div class="cert-platform">Bahubali Engineering College</div>
-            <div class="cert-title">Hackathon — Hardware Track</div>
-            <div class="cert-focus">Embedded systems and IoT engineering challenge</div>
-            <a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a>
-          </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon">🏫</div>
+        <div>
+          <div class="edu-year">2020</div>
+          <div class="edu-degree">SSLC — Secondary School Leaving Certificate</div>
+          <div class="edu-inst">Karnataka State Board</div>
+          <div class="edu-score">Percentage: 65.44%</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="section-label">// 05 CONTACT</div>
-      <div class="contact-center">
-        <h2>Let's build something<br><span class="accent">together.</span></h2>
-        <p>I'm actively looking for internship opportunities in IoT, Embedded Systems, and Hardware Engineering. Open to collaborations and project discussions too.</p>
-        <div class="contact-links">
-          <a href="mailto:varunkumarsr43@gmail.com" class="contact-card">
-            <div class="contact-card-icon">📧</div>
-            <div class="contact-card-label">Email</div>
-            <div class="contact-card-val">varunkumarsr43@gmail.com</div>
-          </a>
-          <a href="https://github.com/VK-Innovate" target="_blank" class="contact-card">
-            <div class="contact-card-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            </div>
-            <div class="contact-card-label">GitHub</div>
-            <div class="contact-card-val">VK-Innovate</div>
-          </a>
-          <a href="https://www.linkedin.com/in/vk-innovate/" target="_blank" class="contact-card">
-            <div class="contact-card-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </div>
-            <div class="contact-card-label">LinkedIn</div>
-            <div class="contact-card-val">vk-innovate</div>
-          </a>
-        </div>
+<!-- GITHUB ACTIVITY -->
+<section id="github" class="section section-dark">
+  <div class="container">
+    <div class="sec-label">// 05 GITHUB</div>
+    <h2 class="sec-title">GitHub Activity</h2>
+    <div class="github-section reveal">
+      <div class="github-header">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          VK-Innovate on GitHub
+        </h3>
+        <a href="https://github.com/VK-Innovate" target="_blank" class="github-link">View Profile ↗</a>
+      </div>
+      <div class="github-graph">
+        <img src="https://ghchart.rshah.org/00D4FF/VK-Innovate" alt="Varun's GitHub contribution chart" onerror="this.style.display='none'"/>
+      </div>
+      <div class="github-stats">
+        <div class="gstat"><div class="gstat-num">7+</div><div class="gstat-label">Repositories</div></div>
+        <div class="gstat"><div class="gstat-num">2</div><div class="gstat-label">Public Repos</div></div>
+        <div class="gstat"><div class="gstat-num">ECE</div><div class="gstat-label">Domain</div></div>
+        <div class="gstat"><div class="gstat-num">2025</div><div class="gstat-label">Active Since</div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span>© 2025 Varun Kumar S R</span>
-        <span>Built with HTML · CSS · JS &nbsp;|&nbsp; Deployed on Vercel</span>
-        <a href="https://github.com/VK-Innovate" target="_blank">VK-Innovate ↗</a>
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="section">
+  <div class="container">
+    <div class="sec-label">// 06 CERTIFICATIONS & HACKATHONS</div>
+    <h2 class="sec-title">Recognition &amp; Learning</h2>
+    <div class="cert-grid">
+      <div class="cert-card reveal"><div class="cert-icon">📘</div><div><div class="cert-platform">Coursera</div><div class="cert-title">Pressure, Force, Motion & Humidity Sensors</div><div class="cert-sub">Sensor fundamentals, IoT, Environmental monitoring</div><a href="https://coursera.org/share/2fc07062b46194be0b2a345dd22ff695" target="_blank" class="cert-link">View Certificate ↗</a></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">📊</div><div><div class="cert-platform">Coursera</div><div class="cert-title">Probability and Statistics</div><div class="cert-sub">Statistical analysis, Probability theory</div><a href="https://coursera.org/share/62a70cc47b5f9246bfe71efe38bef3c4" target="_blank" class="cert-link">View Certificate ↗</a></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🌐</div><div><div class="cert-platform">Coursera</div><div class="cert-title">Computer Networks & Network Security</div><div class="cert-sub">Networking fundamentals, Security concepts</div><a href="https://coursera.org/share/390ef51a1946cb846e0359cb7aa44234" target="_blank" class="cert-link">View Certificate ↗</a></div></div>
+      <div class="cert-card hack reveal"><div class="cert-icon">🏆</div><div><div class="cert-platform">Smart India Hackathon</div><div class="cert-title">Hardware Category — SIH</div><div class="cert-sub">AI-based precision pesticide drone with RTK-GPS targeting</div><a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a></div></div>
+      <div class="cert-card hack reveal"><div class="cert-icon">🚀</div><div><div class="cert-platform">Bahubali Engineering College</div><div class="cert-title">Hackathon — Hardware Track</div><div class="cert-sub">Embedded systems and IoT engineering challenge</div><a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section section-dark">
+  <div class="container">
+    <div class="sec-label">// 07 CONTACT</div>
+    <div class="contact-center">
+      <h2>Let's build something<br><span class="accent">together.</span></h2>
+      <p>I'm actively looking for internship opportunities in IoT, Embedded Systems, and Hardware Engineering. Open to collaborations and project discussions too.</p>
+      <div class="contact-cards">
+        <a href="mailto:varunkumarsr43@gmail.com" class="ccard"><div class="ccard-icon">📧</div><div class="ccard-label">Email</div><div class="ccard-val">varunkumarsr43@gmail.com</div></a>
+        <a href="https://github.com/VK-Innovate" target="_blank" class="ccard"><div class="ccard-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></div><div class="ccard-label">GitHub</div><div class="ccard-val">VK-Innovate</div></a>
+        <a href="https://www.linkedin.com/in/vk-innovate/" target="_blank" class="ccard"><div class="ccard-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><div class="ccard-label">LinkedIn</div><div class="ccard-val">vk-innovate</div></a>
+        <a href="varun_resume.pdf" download class="ccard"><div class="ccard-icon">📄</div><div class="ccard-label">Resume</div><div class="ccard-val">Download PDF</div></a>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>© 2025 Varun Kumar S R</span>
+      <span>ECE Engineer · IoT · Embedded Systems</span>
+      <a href="https://github.com/VK-Innovate" target="_blank">VK-Innovate ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// TYPED ROLE
+const roles = ["Embedded Engineer", "IoT Developer", "PCB Designer", "Security Researcher", "Hardware Builder"];
+let ri = 0, ci = 0, deleting = false;
+const roleEl = document.getElementById('typed-role');
+function typeRole() {
+  const current = roles[ri];
+  if (!deleting) {
+    roleEl.textContent = current.slice(0, ++ci);
+    if (ci === current.length) { deleting = true; setTimeout(typeRole, 1800); return; }
+  } else {
+    roleEl.textContent = current.slice(0, --ci);
+    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+  }
+  setTimeout(typeRole, deleting ? 50 : 90);
+}
+typeRole();
+
+// NAVBAR
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); });
+
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// REVEAL
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = [...e.target.parentElement.children].indexOf(e.target);
+      e.target.style.transitionDelay = (idx % 3) * 0.1 + 's';
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => obs.observe(el));
+
+// ACTIVE NAV
+const sections = document.querySelectorAll('section[id]');
+const anchors = document.querySelectorAll('.nav-links a');
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      anchors.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + e.target.id) a.classList.add('active');
+      });
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => secObs.observe(s));
+</script>
 </body>
 </html>
