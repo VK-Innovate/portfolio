@@ -248,7 +248,7 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
   <div class="hero-right">
     <div class="hero-photo-wrap">
       <div class="hero-photo-glow"></div>
-      <img src="./varun.png" alt="Varun Kumar S R" class="hero-photo" loading="eager" onerror="this.style.opacity='0.3'"/>
+      <div class="hero-photo" id="heroPhoto" style="background-image:url('./varun.png');background-size:cover;background-position:center top;"><img src="./varun.png" alt="Varun Kumar S R" style="width:100%;height:100%;object-fit:cover;border-radius:18px;display:block;" loading="eager" onerror="this.style.display='none'"/></div>
       <div class="hero-badge badge-top"><span class="badge-icon">⚡</span> ECE ENGINEER</div>
       <div class="hero-badge badge-mid"><span class="badge-icon">🔐</span> SECURITY</div>
       <div class="hero-badge badge-bot"><span class="badge-icon">📡</span> IOT BUILDER</div>
@@ -478,6 +478,22 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
 </footer>
 
 <script>
+// IMAGE FIX — force reload with cache bust if img fails
+const heroImg = document.querySelector("#heroPhoto img");
+if (heroImg) {
+  heroImg.addEventListener("error", function() {
+    // Try with cache-busted URL
+    const cb = "?v=" + Date.now();
+    const tries = ["varun.png" + cb, "./varun.png" + cb, "/varun.png" + cb];
+    let t = 0;
+    const tryNext = () => {
+      if (t < tries.length) { this.src = tries[t++]; }
+    };
+    this.addEventListener("error", tryNext);
+    tryNext();
+  });
+}
+
 // TYPED ROLE
 const roles = ["Embedded Engineer", "IoT Developer", "PCB Designer", "Security Researcher", "Hardware Builder"];
 let ri = 0, ci = 0, deleting = false;

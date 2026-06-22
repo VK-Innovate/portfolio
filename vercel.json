@@ -1,9 +1,14 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.html", "use": "@vercel/static" }
+    { "src": "**/*", "use": "@vercel/static" }
   ],
   "routes": [
+    {
+      "src": "/varun.png",
+      "headers": { "Cache-Control": "public, max-age=0, must-revalidate" },
+      "dest": "/varun.png"
+    },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }
