@@ -1,211 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Varun Kumar S R — ECE Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Varun Kumar S R — ECE Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#080C1A;--bg2:#0D1225;--card:#111827;--border:#1E2D45;
-  --accent:#00D4FF;--accent2:#0099CC;--text:#E8EDF5;--muted:#7A8BAA;
-  --white:#fff;--green:#00FF88;--yellow:#FFD700;--red:#FF5F57;
-  --font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  /* Dark neomorphism palette — deep slate base */
+  --bg:#1a1e2e;
+  --bg-deep:#141827;
+  --bg-raised:#1f2436;
+  --neo-light:#252b3f;
+  --neo-shadow:#0e111c;
+  --neo-inset-light:#232840;
+  --neo-inset-dark:#111422;
+
+  /* Accent — electric violet + cyan */
+  --accent:#7c6fff;
+  --accent2:#4fc3f7;
+  --accent-glow:rgba(124,111,255,0.35);
+  --cyan-glow:rgba(79,195,247,0.25);
+  --green:#50fa7b;
+  --yellow:#f1fa8c;
+  --red:#ff5555;
+
+  /* Text */
+  --text:#e2e8f8;
+  --muted:#7888aa;
+  --dim:#4a556e;
+
+  /* Fonts */
+  --f-display:'Syne',sans-serif;
+  --f-body:'DM Sans',sans-serif;
+  --f-mono:'JetBrains Mono',monospace;
+
+  /* Neo shadows */
+  --sh-out:6px 6px 14px var(--neo-shadow),-6px -6px 14px var(--neo-light);
+  --sh-out-lg:10px 10px 28px var(--neo-shadow),-10px -10px 28px var(--neo-light);
+  --sh-in:inset 4px 4px 10px var(--neo-inset-dark),inset -4px -4px 10px var(--neo-inset-light);
+  --sh-accent:0 0 0 1px rgba(124,111,255,0.15),6px 6px 14px var(--neo-shadow),-6px -6px 14px var(--neo-light);
+  --sh-hover:4px 4px 10px var(--neo-shadow),-4px -4px 10px var(--neo-light),0 0 20px var(--accent-glow);
 }
+
 html{scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
+body{font-family:var(--f-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
 a{color:inherit;text-decoration:none;}
-::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px;}
+::selection{background:var(--accent);color:#fff;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg-deep);}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
 
-/* NAV */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:1.5rem;padding:1rem 2.5rem;background:rgba(8,12,26,0.8);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,212,255,0.07);transition:all 0.3s;}
-#navbar.scrolled{padding:0.65rem 2.5rem;background:rgba(8,12,26,0.97);}
-.nav-logo{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-right:auto;}
-.nav-logo .accent{color:var(--accent);}
-.nav-links{display:flex;gap:1.8rem;list-style:none;}
-.nav-links a{font-size:0.85rem;font-weight:500;color:var(--muted);transition:color 0.2s;padding:0.3rem 0.7rem;border-radius:20px;}
-.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(0,212,255,0.08);}
-.nav-icons{display:flex;gap:0.8rem;align-items:center;}
-.nav-icons a{color:var(--muted);transition:color 0.2s;display:flex;}
-.nav-icons a:hover{color:var(--accent);}
-.hamburger{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;}
+/* ===== NAV ===== */
+#navbar{
+  position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);
+  z-index:200;display:flex;align-items:center;gap:0;
+  background:var(--bg-raised);
+  border-radius:50px;
+  box-shadow:var(--sh-out);
+  padding:0.6rem 1.2rem;
+  border:1px solid rgba(124,111,255,0.08);
+  transition:all 0.4s;
+  width:min(900px,92vw);
+}
+#navbar.scrolled{top:0.6rem;box-shadow:var(--sh-out-lg);}
+.nav-logo{
+  font-family:var(--f-display);font-size:1.25rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-right:auto;padding-right:1.5rem;
+}
+.nav-links{display:flex;gap:0.2rem;list-style:none;}
+.nav-links a{
+  font-size:0.8rem;font-weight:500;color:var(--muted);
+  padding:0.4rem 0.9rem;border-radius:30px;transition:all 0.25s;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:var(--text);
+  background:var(--bg);
+  box-shadow:var(--sh-in);
+}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;padding:0.3rem;}
 
-/* HERO */
-#hero{min-height:100vh;display:flex;align-items:center;padding:7rem 2.5rem 4rem;position:relative;overflow:hidden;gap:4rem;}
-.hero-bg{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:50px 50px;}
-.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 80% 50%,rgba(0,212,255,0.05) 0%,transparent 60%);}
-#hero>*{position:relative;z-index:1;}
-.hero-left{flex:1;max-width:560px;}
-.hero-avail{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--accent);margin-bottom:1.2rem;background:rgba(0,212,255,0.06);padding:0.3rem 0.9rem;border-radius:20px;border:1px solid rgba(0,212,255,0.2);}
-.hero-avail-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero-hi{font-size:1.1rem;color:var(--muted);margin-bottom:0.4rem;}
-.hero-name{font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:700;color:var(--white);letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.5rem;}
-.hero-role{font-family:var(--font-mono);font-size:1.15rem;color:var(--accent);margin-bottom:1.2rem;min-height:1.8rem;}
-.hero-role .cursor{animation:blink 1s step-end infinite;}
+/* ===== HERO ===== */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:8rem 5vw 5rem;gap:5rem;position:relative;overflow:hidden;
+}
+/* 3D ambient blobs */
+.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
+.blob1{width:500px;height:500px;background:radial-gradient(circle,rgba(124,111,255,0.12),transparent 70%);top:-10%;right:-5%;}
+.blob2{width:400px;height:400px;background:radial-gradient(circle,rgba(79,195,247,0.08),transparent 70%);bottom:5%;left:-5%;}
+.blob3{width:200px;height:200px;background:radial-gradient(circle,rgba(80,250,123,0.06),transparent 70%);top:40%;left:35%;}
+
+#hero>*:not(.hero-blob){position:relative;z-index:1;}
+.hero-left{flex:1;max-width:580px;}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:0.55rem;
+  background:var(--bg-raised);box-shadow:var(--sh-out);
+  border-radius:30px;padding:0.45rem 1.1rem;
+  font-family:var(--f-mono);font-size:0.72rem;color:var(--accent2);
+  margin-bottom:1.8rem;border:1px solid rgba(79,195,247,0.12);
+}
+.chip-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px var(--green);}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.85)}}
+.hero-hi{font-size:1.05rem;color:var(--muted);margin-bottom:0.3rem;font-weight:300;}
+.hero-name{
+  font-family:var(--f-display);
+  font-size:clamp(3rem,5.5vw,4.8rem);
+  font-weight:800;line-height:1.0;letter-spacing:-0.03em;
+  color:var(--text);margin-bottom:0.6rem;
+  text-shadow:0 4px 40px rgba(124,111,255,0.2);
+}
+.hero-name .name-accent{
+  background:linear-gradient(120deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-role{
+  font-family:var(--f-mono);font-size:1.1rem;
+  color:var(--accent2);margin-bottom:1.4rem;min-height:2rem;
+}
+.cursor{animation:blink 1s step-end infinite;color:var(--accent);}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero-desc{font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:480px;}
-.hero-btns{display:flex;flex-wrap:wrap;gap:0.9rem;align-items:center;}
-.btn-primary{padding:0.75rem 1.8rem;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;border-radius:8px;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;}
-.btn-primary:hover{background:#33DDFF;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,0.3);}
-.btn-secondary{padding:0.75rem 1.6rem;border:1px solid var(--border);color:var(--text);font-size:0.9rem;border-radius:8px;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
-.btn-text{color:var(--muted);font-size:0.9rem;display:inline-flex;align-items:center;gap:0.3rem;transition:color 0.2s;}
-.btn-text:hover{color:var(--accent);}
+.hero-desc{font-size:1rem;color:var(--muted);line-height:1.8;margin-bottom:2.2rem;font-weight:300;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;}
+.neo-btn-primary{
+  padding:0.8rem 2rem;
+  background:linear-gradient(135deg,var(--accent),#6055ee);
+  color:#fff;font-weight:700;font-size:0.9rem;
+  border-radius:12px;
+  box-shadow:0 4px 20px var(--accent-glow),var(--sh-out);
+  transition:all 0.25s;display:inline-flex;align-items:center;gap:0.5rem;
+  border:none;cursor:pointer;
+}
+.neo-btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 32px var(--accent-glow),var(--sh-out-lg);}
+.neo-btn-secondary{
+  padding:0.8rem 1.8rem;
+  background:var(--bg-raised);
+  box-shadow:var(--sh-out);
+  border-radius:12px;
+  color:var(--text);font-size:0.9rem;font-weight:500;
+  transition:all 0.25s;display:inline-flex;align-items:center;gap:0.5rem;
+  border:1px solid rgba(255,255,255,0.04);
+}
+.neo-btn-secondary:hover{box-shadow:var(--sh-hover);color:var(--accent);}
+.neo-btn-ghost{color:var(--muted);font-size:0.88rem;transition:color 0.2s;display:inline-flex;align-items:center;gap:0.3rem;}
+.neo-btn-ghost:hover{color:var(--accent2);}
 
-/* HERO PHOTO */
-.hero-right{flex:0 0 auto;position:relative;width:360px;}
-.hero-photo-wrap{position:relative;width:340px;height:420px;}
-.hero-photo-glow{position:absolute;inset:-2px;border-radius:20px;background:linear-gradient(135deg,var(--accent),transparent 60%);opacity:0.3;z-index:0;}
-.hero-photo{width:100%;height:100%;object-fit:cover;border-radius:18px;position:relative;z-index:1;filter:grayscale(15%);}
-.hero-badge{position:absolute;display:flex;align-items:center;gap:0.5rem;background:rgba(13,18,37,0.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;padding:0.5rem 0.9rem;font-family:var(--font-mono);font-size:0.72rem;color:var(--text);font-weight:600;letter-spacing:0.05em;z-index:2;white-space:nowrap;}
-.hero-badge .badge-icon{font-size:1rem;}
-.badge-top{top:-16px;left:-30px;}
-.badge-mid{right:-30px;top:45%;}
-.badge-bot{bottom:20px;right:-20px;}
+/* ===== HERO PHOTO — 3D FLOATING CARD ===== */
+.hero-right{flex:0 0 auto;position:relative;width:340px;}
+.photo-3d-scene{
+  width:320px;height:420px;position:relative;
+  perspective:1000px;
+}
+.photo-3d-card{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);
+  border-radius:24px;
+}
+.photo-3d-scene:hover .photo-3d-card{transform:rotateY(-6deg) rotateX(3deg);}
+.photo-inner{
+  width:100%;height:100%;
+  border-radius:24px;
+  background:var(--bg-raised);
+  box-shadow:var(--sh-out-lg),0 0 40px rgba(124,111,255,0.15);
+  overflow:hidden;position:relative;
+  border:1px solid rgba(124,111,255,0.1);
+}
+.photo-inner img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  display:block;border-radius:24px;
+  transition:transform 0.6s ease;
+}
+.photo-3d-scene:hover .photo-inner img{transform:scale(1.04);}
+.photo-overlay{
+  position:absolute;inset:0;border-radius:24px;
+  background:linear-gradient(to bottom,transparent 55%,rgba(20,24,39,0.8));
+  pointer-events:none;
+}
+.photo-shine{
+  position:absolute;inset:0;border-radius:24px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 50%);
+  pointer-events:none;
+}
+/* Floating badges */
+.fbadge{
+  position:absolute;
+  background:var(--bg-raised);
+  box-shadow:var(--sh-out),0 0 14px rgba(124,111,255,0.2);
+  border:1px solid rgba(124,111,255,0.15);
+  border-radius:14px;padding:0.55rem 1rem;
+  font-family:var(--f-mono);font-size:0.7rem;font-weight:500;
+  color:var(--text);white-space:nowrap;letter-spacing:0.06em;
+  display:flex;align-items:center;gap:0.5rem;
+  z-index:5;
+  animation:float 4s ease-in-out infinite;
+}
+.fbadge:nth-child(2){animation-delay:-1.3s;}
+.fbadge:nth-child(3){animation-delay:-2.6s;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.fbadge-tl{top:-18px;left:-40px;}
+.fbadge-mr{right:-42px;top:42%;}
+.fbadge-bl{bottom:24px;right:-38px;}
 
-/* SECTION BASE */
-.section{padding:5.5rem 2.5rem;}
-.section-dark{background:var(--bg2);}
-.container{max-width:1100px;margin:0 auto;}
-.sec-label{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent);letter-spacing:0.12em;margin-bottom:0.8rem;}
-.sec-title{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-bottom:2.8rem;}
-.accent{color:var(--accent);}
+/* ===== SECTION BASE ===== */
+.section{padding:6rem 5vw;}
+.section-alt{background:var(--bg-deep);}
+.container{max-width:1080px;margin:0 auto;}
+.sec-chip{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:var(--f-mono);font-size:0.7rem;color:var(--accent);
+  background:var(--bg-raised);box-shadow:var(--sh-in);
+  border-radius:20px;padding:0.3rem 0.9rem;margin-bottom:1rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+}
+.sec-title{
+  font-family:var(--f-display);
+  font-size:clamp(1.9rem,3vw,2.6rem);
+  font-weight:800;color:var(--text);
+  letter-spacing:-0.02em;margin-bottom:3rem;
+  line-height:1.1;
+}
+.sec-title .t-accent{
+  background:linear-gradient(120deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
-.about-text h2{font-family:var(--font-display);font-size:clamp(1.5rem,2.5vw,2rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;line-height:1.25;margin-bottom:1.3rem;}
-.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1.1rem;font-size:0.95rem;}
-.about-stats{display:flex;gap:2.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);}
-.stat-num{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:var(--accent);}
-.stat-label{font-size:0.78rem;color:var(--muted);}
-.about-cards{display:flex;flex-direction:column;gap:0.9rem;}
-.acard{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;}
-.acard:hover{border-color:rgba(0,212,255,0.3);}
-.acard-icon{font-size:1.3rem;}
-.acard-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
-.acard-val{font-size:0.9rem;color:var(--text);font-weight:500;margin-top:2px;}
-.acard-val a{color:var(--accent);}
-.acard-meta{font-size:0.78rem;color:var(--muted);}
+/* ===== NEO CARD BASE ===== */
+.neo-card{
+  background:var(--bg-raised);
+  border-radius:20px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  transition:all 0.3s;
+}
+.neo-card:hover{
+  box-shadow:var(--sh-hover);
+  border-color:rgba(124,111,255,0.15);
+  transform:translateY(-4px);
+}
+.neo-card-inset{
+  background:var(--bg);
+  border-radius:14px;
+  box-shadow:var(--sh-in);
+  border:1px solid rgba(0,0,0,0.15);
+}
 
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
-.skill-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:border-color 0.2s,transform 0.2s;}
-.skill-card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-2px);}
-.skill-card-title{font-family:var(--font-display);font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.9rem;display:flex;align-items:center;gap:0.5rem;}
-.stags{display:flex;flex-wrap:wrap;gap:0.35rem;}
-.stags span{font-family:var(--font-mono);font-size:0.7rem;padding:0.22rem 0.55rem;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:4px;color:var(--muted);}
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:start;}
+.about-text h2{
+  font-family:var(--f-display);font-size:clamp(1.6rem,2.5vw,2.1rem);
+  font-weight:800;line-height:1.2;margin-bottom:1.2rem;
+  color:var(--text);
+}
+.about-text p{color:var(--muted);line-height:1.85;margin-bottom:1rem;font-size:0.95rem;font-weight:300;}
+.about-stats{
+  display:flex;gap:0;margin-top:2rem;
+  background:var(--bg-raised);border-radius:18px;
+  box-shadow:var(--sh-out);overflow:hidden;
+}
+.stat-item{
+  flex:1;padding:1.2rem;text-align:center;
+  border-right:1px solid rgba(255,255,255,0.04);
+  transition:background 0.2s;
+}
+.stat-item:last-child{border-right:none;}
+.stat-item:hover{background:var(--bg);}
+.stat-num{
+  font-family:var(--f-display);font-size:1.8rem;font-weight:800;
+  background:linear-gradient(120deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{font-size:0.72rem;color:var(--muted);margin-top:2px;font-weight:300;}
+.about-info-cards{display:flex;flex-direction:column;gap:0.8rem;}
+.ainfo{
+  display:flex;align-items:center;gap:1rem;
+  padding:0.9rem 1.2rem;
+  background:var(--bg-raised);border-radius:14px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  transition:all 0.25s;
+}
+.ainfo:hover{box-shadow:var(--sh-hover);border-color:rgba(124,111,255,0.15);}
+.ainfo-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+.ainfo-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.ainfo-val{font-size:0.88rem;color:var(--text);font-weight:500;margin-top:1px;}
+.ainfo-val a{color:var(--accent2);}
 
-/* PROJECTS */
-.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
-.pcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.4rem;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;display:flex;flex-direction:column;gap:0.7rem;position:relative;}
-.pcard:hover{border-color:rgba(0,212,255,0.35);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,0.07);}
-.pcard.featured{grid-column:span 2;border-color:rgba(0,212,255,0.2);background:linear-gradient(135deg,var(--card),rgba(0,212,255,0.04));}
-.pbadge{position:absolute;top:0.9rem;right:0.9rem;font-family:var(--font-mono);font-size:0.62rem;padding:0.18rem 0.55rem;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);border-radius:20px;color:var(--accent);}
-.phead{display:flex;justify-content:space-between;align-items:center;}
-.picon{font-size:1.7rem;}
-.plink a{color:var(--muted);transition:color 0.2s;}
-.plink a:hover{color:var(--accent);}
-.pcard h3{font-family:var(--font-display);font-size:0.97rem;font-weight:600;color:var(--white);line-height:1.3;}
-.pcard p{font-size:0.845rem;color:var(--muted);line-height:1.7;flex:1;}
+/* ===== SKILLS ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.skill-card{
+  padding:1.5rem;
+  background:var(--bg-raised);border-radius:18px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  transition:all 0.3s;
+}
+.skill-card:hover{
+  box-shadow:var(--sh-hover);
+  border-color:rgba(124,111,255,0.2);
+  transform:translateY(-4px) rotateX(2deg);
+}
+.skill-title{
+  font-family:var(--f-display);font-size:0.88rem;font-weight:700;
+  color:var(--text);margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.skill-icon{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  display:flex;align-items:center;justify-content:center;font-size:0.9rem;
+}
+.stags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.stag{
+  font-family:var(--f-mono);font-size:0.68rem;
+  padding:0.3rem 0.65rem;
+  background:var(--bg);
+  box-shadow:var(--sh-in);
+  border-radius:8px;color:var(--muted);
+  transition:color 0.2s;
+}
+.stag:hover{color:var(--accent2);}
+
+/* ===== PROJECTS ===== */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.pcard{
+  padding:1.5rem;
+  background:var(--bg-raised);border-radius:20px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  transition:all 0.35s cubic-bezier(0.23,1,0.32,1);
+  display:flex;flex-direction:column;gap:0.75rem;position:relative;
+  transform-style:preserve-3d;
+}
+.pcard:hover{
+  transform:translateY(-8px) rotateX(4deg) rotateY(-2deg);
+  box-shadow:var(--sh-out-lg),0 12px 40px var(--accent-glow);
+  border-color:rgba(124,111,255,0.2);
+}
+.pcard.featured{
+  grid-column:span 2;
+  border-color:rgba(124,111,255,0.15);
+  background:linear-gradient(135deg,var(--bg-raised),rgba(124,111,255,0.04));
+}
+.pcard.featured::before{
+  content:'FEATURED';
+  position:absolute;top:-1px;right:1.5rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-family:var(--f-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.1em;
+  padding:0.2rem 0.75rem 0.35rem;border-radius:0 0 10px 10px;
+}
+.pcard-icon{
+  width:46px;height:46px;border-radius:14px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  margin-bottom:0.2rem;
+}
+.pcard-head{display:flex;justify-content:space-between;align-items:flex-start;}
+.pcard-link a{
+  display:flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:8px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  color:var(--muted);transition:color 0.2s;
+}
+.pcard-link a:hover{color:var(--accent2);}
+.pcard h3{font-family:var(--f-display);font-size:0.97rem;font-weight:700;color:var(--text);line-height:1.3;}
+.pcard p{font-size:0.845rem;color:var(--muted);line-height:1.7;flex:1;font-weight:300;}
 .ptags{display:flex;flex-wrap:wrap;gap:0.35rem;}
-.ptags span{font-family:var(--font-mono);font-size:0.66rem;padding:0.18rem 0.5rem;background:rgba(0,212,255,0.04);border:1px solid var(--border);border-radius:4px;color:var(--muted);}
-.pcta{text-align:center;margin-top:2.5rem;}
+.ptag{
+  font-family:var(--f-mono);font-size:0.64rem;
+  padding:0.22rem 0.55rem;
+  background:var(--bg);box-shadow:var(--sh-in);
+  border-radius:6px;color:var(--dim);
+}
+.projects-cta{text-align:center;margin-top:2.5rem;}
 
-/* EDUCATION */
-.edu-grid{display:flex;flex-direction:column;gap:1.2rem;}
-.edu-card{display:flex;align-items:flex-start;gap:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s;}
-.edu-card:hover{border-color:rgba(0,212,255,0.3);}
-.edu-icon{font-size:2rem;flex-shrink:0;}
-.edu-year{font-family:var(--font-mono);font-size:0.75rem;color:var(--accent);letter-spacing:0.05em;margin-bottom:0.3rem;}
-.edu-degree{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:0.2rem;}
-.edu-inst{font-size:0.88rem;color:var(--muted);}
-.edu-score{font-family:var(--font-mono);font-size:0.8rem;color:var(--green);margin-top:0.4rem;}
+/* ===== EDUCATION ===== */
+.edu-stack{display:flex;flex-direction:column;gap:1rem;}
+.edu-card{
+  display:flex;align-items:flex-start;gap:1.5rem;
+  padding:1.5rem;
+  background:var(--bg-raised);border-radius:20px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  transition:all 0.3s;
+}
+.edu-card:hover{box-shadow:var(--sh-hover);border-color:rgba(124,111,255,0.15);}
+.edu-card-icon{
+  width:52px;height:52px;flex-shrink:0;border-radius:14px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+}
+.edu-year{font-family:var(--f-mono);font-size:0.72rem;color:var(--accent2);margin-bottom:0.4rem;letter-spacing:0.06em;}
+.edu-degree{font-family:var(--f-display);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.2rem;}
+.edu-inst{font-size:0.875rem;color:var(--muted);font-weight:300;}
+.edu-score{
+  display:inline-block;margin-top:0.6rem;
+  font-family:var(--f-mono);font-size:0.78rem;color:var(--green);
+  background:var(--bg);box-shadow:var(--sh-in);
+  border-radius:8px;padding:0.2rem 0.7rem;
+}
 
-/* GITHUB ACTIVITY */
-.github-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;overflow:hidden;}
-.github-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
-.github-header h3{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--white);display:flex;align-items:center;gap:0.6rem;}
-.github-link{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent);}
-.github-graph{width:100%;overflow-x:auto;}
-.github-graph img{width:100%;border-radius:8px;filter:invert(0);opacity:0.9;}
-.github-streak{margin-top:1.2rem;display:flex;justify-content:center;}
-.github-streak img{max-width:500px;width:100%;border-radius:8px;}
-.github-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.5rem;}
-.gstat{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
-.gstat-num{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--accent);}
-.gstat-label{font-size:0.75rem;color:var(--muted);margin-top:0.2rem;}
+/* ===== GITHUB ===== */
+.github-wrap{
+  padding:2rem;
+  background:var(--bg-raised);border-radius:24px;
+  box-shadow:var(--sh-out-lg);
+  border:1px solid rgba(124,111,255,0.08);
+}
+.github-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem;}
+.github-header h3{
+  font-family:var(--f-display);font-size:1.1rem;font-weight:700;
+  color:var(--text);display:flex;align-items:center;gap:0.7rem;
+}
+.github-link{
+  font-family:var(--f-mono);font-size:0.75rem;color:var(--accent2);
+  padding:0.35rem 0.9rem;
+  background:var(--bg);box-shadow:var(--sh-in);border-radius:20px;
+  transition:color 0.2s;
+}
+.github-link:hover{color:var(--accent);}
+.github-graph{
+  padding:1rem;
+  background:var(--bg);border-radius:14px;
+  box-shadow:var(--sh-in);margin-bottom:1.2rem;overflow-x:auto;
+}
+.github-graph img{width:100%;border-radius:8px;opacity:0.85;}
+.github-streak{display:flex;justify-content:center;margin-bottom:1.5rem;}
+.github-streak img{max-width:520px;width:100%;border-radius:12px;}
+.github-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.gstat{
+  padding:1.1rem;text-align:center;
+  background:var(--bg);box-shadow:var(--sh-in);border-radius:14px;
+}
+.gstat-num{font-family:var(--f-display);font-size:1.4rem;font-weight:800;color:var(--accent);}
+.gstat-label{font-size:0.7rem;color:var(--muted);margin-top:3px;font-weight:300;}
 
-/* CERTIFICATIONS */
-.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
-.cert-card{display:flex;gap:0.9rem;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:border-color 0.2s,transform 0.2s;}
-.cert-card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-2px);}
-.cert-card.hack{border-color:rgba(255,215,0,0.12);}
-.cert-card.hack:hover{border-color:rgba(255,215,0,0.3);}
-.cert-icon{font-size:1.5rem;flex-shrink:0;}
-.cert-platform{font-family:var(--font-mono);font-size:0.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;}
-.cert-card.hack .cert-platform{color:var(--yellow);}
-.cert-title{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.35rem;line-height:1.35;}
-.cert-sub{font-size:0.75rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;}
-.cert-link{font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);}
-.cert-link:hover{opacity:0.7;}
+/* ===== CERTIFICATIONS ===== */
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.cert-card{
+  padding:1.3rem;
+  background:var(--bg-raised);border-radius:18px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  display:flex;gap:1rem;
+  transition:all 0.3s;
+}
+.cert-card:hover{box-shadow:var(--sh-hover);border-color:rgba(124,111,255,0.18);transform:translateY(-3px);}
+.cert-card.hackathon{border-color:rgba(241,250,140,0.08);}
+.cert-card.hackathon:hover{border-color:rgba(241,250,140,0.2);box-shadow:var(--sh-out),0 8px 30px rgba(241,250,140,0.08);}
+.cert-icon{
+  width:40px;height:40px;flex-shrink:0;border-radius:11px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+}
+.cert-platform{font-family:var(--f-mono);font-size:0.65rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;}
+.cert-card.hackathon .cert-platform{color:var(--yellow);}
+.cert-title{font-size:0.875rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;line-height:1.35;}
+.cert-sub{font-size:0.73rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;font-weight:300;}
+.cert-link{
+  font-family:var(--f-mono);font-size:0.68rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:0.25rem;
+  transition:opacity 0.2s;
+}
+.cert-link:hover{opacity:0.75;}
 
-/* CONTACT */
-.contact-center{text-align:center;max-width:680px;margin:0 auto;}
-.contact-center h2{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-bottom:1rem;line-height:1.2;}
-.contact-center p{color:var(--muted);font-size:0.97rem;margin-bottom:2.8rem;line-height:1.75;}
+/* ===== CONTACT ===== */
+.contact-center{max-width:720px;margin:0 auto;text-align:center;}
+.contact-center h2{font-family:var(--f-display);font-size:clamp(2rem,3.5vw,3rem);font-weight:800;color:var(--text);margin-bottom:1rem;line-height:1.1;letter-spacing:-0.02em;}
+.contact-center p{color:var(--muted);font-size:0.97rem;line-height:1.8;margin-bottom:3rem;font-weight:300;}
 .contact-cards{display:flex;justify-content:center;flex-wrap:wrap;gap:1.2rem;}
-.ccard{display:flex;flex-direction:column;align-items:center;gap:0.45rem;padding:1.4rem 1.8rem;background:var(--card);border:1px solid var(--border);border-radius:10px;min-width:170px;transition:all 0.2s;}
-.ccard:hover{border-color:rgba(0,212,255,0.4);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,212,255,0.08);}
-.ccard-icon{font-size:1.7rem;color:var(--accent);}
-.ccard-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
-.ccard-val{font-size:0.82rem;color:var(--text);font-weight:500;}
+.ccard{
+  display:flex;flex-direction:column;align-items:center;gap:0.6rem;
+  padding:1.6rem 2rem;
+  background:var(--bg-raised);border-radius:20px;
+  box-shadow:var(--sh-out);
+  border:1px solid rgba(255,255,255,0.03);
+  min-width:160px;transition:all 0.3s;
+}
+.ccard:hover{
+  box-shadow:var(--sh-hover);border-color:rgba(124,111,255,0.2);
+  transform:translateY(-5px) scale(1.03);
+}
+.ccard-iconwrap{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--bg);box-shadow:var(--sh-in);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  color:var(--accent2);
+}
+.ccard-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+.ccard-val{font-size:0.8rem;color:var(--text);font-weight:500;}
 
-/* FOOTER */
-footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);}
-.footer-inner a{color:var(--accent);}
+/* ===== FOOTER ===== */
+footer{
+  padding:1.8rem 5vw;
+  background:var(--bg-deep);
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+.footer-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:0.5rem;
+  font-size:0.78rem;color:var(--dim);font-family:var(--f-mono);
+}
+.footer-inner a{color:var(--accent2);}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.55s ease,transform 0.55s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(28px) scale(0.98);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0) scale(1);}
 
-/* RESPONSIVE */
+/* ===== RESPONSIVE ===== */
 @media(max-width:960px){
   .nav-links{display:none;}.hamburger{display:block;}
-  #hero{flex-direction:column;padding-top:8rem;gap:3rem;}
+  #hero{flex-direction:column-reverse;padding-top:9rem;gap:3rem;text-align:center;}
+  .hero-btns{justify-content:center;}
   .hero-right{width:100%;display:flex;justify-content:center;}
-  .hero-photo-wrap{width:260px;height:320px;}
-  .badge-top{left:-10px;}.badge-mid{right:-10px;}.badge-bot{right:-5px;}
-  .about-grid{grid-template-columns:1fr;gap:2rem;}
+  .about-grid{grid-template-columns:1fr;}
   .skills-grid{grid-template-columns:repeat(2,1fr);}
   .projects-grid{grid-template-columns:1fr;}
   .pcard.featured{grid-column:span 1;}
-  .cert-grid{grid-template-columns:1fr;}
+  .cert-grid{grid-template-columns:1fr 1fr;}
   .github-stats{grid-template-columns:repeat(2,1fr);}
-  .contact-cards{flex-direction:column;align-items:center;}
 }
-@media(max-width:600px){
-  .section{padding:3.5rem 1.2rem;}#navbar{padding:0.85rem 1.2rem;}
+@media(max-width:640px){
+  .section{padding:4rem 4vw;}
   .skills-grid{grid-template-columns:1fr;}
-  .about-stats{gap:1.5rem;}
-  .hero-btns{flex-direction:column;align-items:flex-start;}
-  .github-stats{grid-template-columns:repeat(2,1fr);}
+  .cert-grid{grid-template-columns:1fr;}
+  .contact-cards{flex-direction:column;align-items:center;}
+  .about-stats{flex-wrap:wrap;}
+  .stat-item{min-width:45%;}
 }
-.nav-links.open{display:flex;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:var(--bg2);padding:1.3rem 2rem;border-bottom:1px solid var(--border);z-index:99;}
-
-/* btn outline */
-.btn-outline{display:inline-block;padding:0.75rem 2rem;border:1px solid var(--accent);color:var(--accent);font-weight:600;border-radius:8px;transition:all 0.2s;font-family:var(--font-mono);font-size:0.88rem;}
-.btn-outline:hover{background:var(--accent);color:var(--bg);}
-  </style>
+.nav-links.open{
+  display:flex;flex-direction:column;
+  position:fixed;top:5rem;left:0;right:0;
+  background:var(--bg-raised);
+  padding:1.2rem 1.8rem;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+  border-bottom:1px solid rgba(124,111,255,0.1);
+  z-index:199;gap:0.2rem;
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="navbar">
-  <div class="nav-logo">VK<span class="accent">.</span></div>
+  <div class="nav-logo">VK.</div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">Home</a></li>
     <li><a href="#about">About</a></li>
@@ -213,72 +563,71 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
     <li><a href="#projects">Projects</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#github">GitHub</a></li>
-    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#certifications">Certs</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="nav-icons">
-    <a href="https://github.com/VK-Innovate" target="_blank" title="GitHub">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-    </a>
-    <a href="mailto:varunkumarsr43@gmail.com" title="Email">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-    </a>
-  </div>
   <button class="hamburger" id="hamburger">&#9776;</button>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="hero-blob blob3"></div>
   <div class="hero-left">
-    <div class="hero-avail"><span class="hero-avail-dot"></span> Available for Placement &amp; Internship Roles</div>
+    <div class="hero-chip"><span class="chip-dot"></span> Available for Internship &amp; Placement</div>
     <p class="hero-hi">Hi, my name is</p>
-    <h1 class="hero-name">Varun Kumar S R</h1>
+    <h1 class="hero-name">Varun Kumar<br><span class="name-accent">S R</span></h1>
     <p class="hero-role"><span id="typed-role"></span><span class="cursor">|</span></p>
     <p class="hero-desc">Building intelligent embedded systems, secure IoT solutions, and hardware-software integrated products from the ground up.</p>
     <div class="hero-btns">
-      <a href="#projects" class="btn-primary">View Projects →</a>
-      <a href="varun_resume.pdf" download class="btn-secondary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download Resume
+      <a href="#projects" class="neo-btn-primary">View Projects →</a>
+      <a href="varun_resume.pdf" download class="neo-btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
       </a>
-      <a href="#contact" class="btn-text">Contact Me ↗</a>
+      <a href="#contact" class="neo-btn-ghost">Contact Me ↗</a>
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-glow"></div>
-      <div class="hero-photo" id="heroPhoto" style="background-image:url('./varun.png');background-size:cover;background-position:center top;"><img src="./varun.png" alt="Varun Kumar S R" style="width:100%;height:100%;object-fit:cover;border-radius:18px;display:block;" loading="eager" onerror="this.style.display='none'"/></div>
-      <div class="hero-badge badge-top"><span class="badge-icon">⚡</span> ECE ENGINEER</div>
-      <div class="hero-badge badge-mid"><span class="badge-icon">🔐</span> SECURITY</div>
-      <div class="hero-badge badge-bot"><span class="badge-icon">📡</span> IOT BUILDER</div>
+    <div class="photo-3d-scene" id="photoScene">
+      <div class="photo-3d-card" id="photo3d">
+        <div class="photo-inner">
+          <img src="./varun.png" alt="Varun Kumar S R" loading="eager" onerror="this.style.opacity='0.1'"/>
+          <div class="photo-overlay"></div>
+          <div class="photo-shine"></div>
+        </div>
+      </div>
+      <div class="fbadge fbadge-tl">⚡ ECE ENGINEER</div>
+      <div class="fbadge fbadge-mr">🔐 SECURITY</div>
+      <div class="fbadge fbadge-bl">📡 IOT BUILDER</div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="section section-dark">
+<section id="about" class="section section-alt">
   <div class="container">
-    <div class="sec-label">// 01 ABOUT</div>
+    <div class="sec-chip">// ABOUT ME</div>
     <div class="about-grid">
       <div class="about-text">
-        <h2>Engineering at the<br><span class="accent">hardware-software</span> boundary.</h2>
+        <h2>Engineering at the<br><span style="background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">hardware-software</span> boundary.</h2>
         <p>I'm a final-year Electronics and Communication Engineering student at Maharaja Institute of Technology Mysore, building systems where firmware meets the physical world.</p>
         <p>My work spans from designing PCB schematics in EasyEDA, flashing ESP32s with custom sensor pipelines, to implementing post-quantum cryptographic protocols in mobile apps. I care about systems that are both functional and secure.</p>
         <p>Currently seeking internship opportunities in IoT, Embedded Systems, or Hardware Engineering.</p>
         <div class="about-stats">
-          <div><div class="stat-num">7+</div><div class="stat-label">GitHub Projects</div></div>
-          <div><div class="stat-num">3</div><div class="stat-label">Certifications</div></div>
-          <div><div class="stat-num">2</div><div class="stat-label">Hackathons</div></div>
-          <div><div class="stat-num">6.5</div><div class="stat-label">Current CGPA</div></div>
+          <div class="stat-item"><div class="stat-num">7+</div><div class="stat-label">Projects</div></div>
+          <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Certs</div></div>
+          <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Hackathons</div></div>
+          <div class="stat-item"><div class="stat-num">6.5</div><div class="stat-label">CGPA</div></div>
         </div>
       </div>
-      <div class="about-cards">
-        <div class="acard reveal"><div class="acard-icon">🎓</div><div><div class="acard-label">Education</div><div class="acard-val">B.E. ECE — MITM, Mysore</div><div class="acard-meta">Expected 2027</div></div></div>
-        <div class="acard reveal"><div class="acard-icon">📍</div><div><div class="acard-label">Location</div><div class="acard-val">Mysore, Karnataka, India</div></div></div>
-        <div class="acard reveal"><div class="acard-icon">📧</div><div><div class="acard-label">Email</div><div class="acard-val"><a href="mailto:varunkumarsr43@gmail.com">varunkumarsr43@gmail.com</a></div></div></div>
-        <div class="acard reveal"><div class="acard-icon">⚡</div><div><div class="acard-label">Domains</div><div class="acard-val">IoT · Embedded · Cybersecurity · AI</div></div></div>
-        <div class="acard reveal"><div class="acard-icon">🌐</div><div><div class="acard-label">Branch</div><div class="acard-val">Electronics &amp; Communication Engineering</div></div></div>
+      <div class="about-info-cards">
+        <div class="ainfo reveal"><div class="ainfo-icon">🎓</div><div><div class="ainfo-label">Education</div><div class="ainfo-val">B.E. ECE — MITM, Mysore</div></div></div>
+        <div class="ainfo reveal"><div class="ainfo-icon">📍</div><div><div class="ainfo-label">Location</div><div class="ainfo-val">Mysore, Karnataka, India</div></div></div>
+        <div class="ainfo reveal"><div class="ainfo-icon">📧</div><div><div class="ainfo-label">Email</div><div class="ainfo-val"><a href="mailto:varunkumarsr43@gmail.com">varunkumarsr43@gmail.com</a></div></div></div>
+        <div class="ainfo reveal"><div class="ainfo-icon">⚡</div><div><div class="ainfo-label">Domains</div><div class="ainfo-val">IoT · Embedded · Cybersecurity · AI</div></div></div>
+        <div class="ainfo reveal"><div class="ainfo-icon">🌐</div><div><div class="ainfo-label">Branch</div><div class="ainfo-val">Electronics &amp; Communication Engineering</div></div></div>
       </div>
     </div>
   </div>
@@ -287,96 +636,83 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
 <!-- SKILLS -->
 <section id="skills" class="section">
   <div class="container">
-    <div class="sec-label">// 02 SKILLS</div>
-    <h2 class="sec-title">Technical Stack</h2>
+    <div class="sec-chip">// SKILLS</div>
+    <h2 class="sec-title">Technical <span class="t-accent">Stack</span></h2>
     <div class="skills-grid">
-      <div class="skill-card reveal"><div class="skill-card-title">🔧 Microcontrollers</div><div class="stags"><span>ESP32</span><span>ESP8266</span><span>Arduino Mega</span><span>Arduino Nano</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-title">💻 Programming</div><div class="stags"><span>C</span><span>Embedded C</span><span>Python</span><span>JavaScript</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-title">📡 Protocols</div><div class="stags"><span>UART</span><span>SPI</span><span>I2C</span><span>ESP-NOW</span><span>OneWire</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-title">🔐 Security</div><div class="stags"><span>AES-256-GCM</span><span>CRYSTALS-Kyber</span><span>Dilithium</span><span>PQC</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-title">🖥️ PCB & Design</div><div class="stags"><span>EasyEDA</span><span>KiCad</span><span>Schematic Design</span><span>PCB Layout</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-title">☁️ Backend & Tools</div><div class="stags"><span>Firebase</span><span>Supabase</span><span>Node.js</span><span>Flask</span><span>Git</span><span>GitHub</span></div></div>
+      <div class="skill-card reveal"><div class="skill-title"><div class="skill-icon">🔧</div>Microcontrollers</div><div class="stags"><span class="stag">ESP32</span><span class="stag">ESP8266</span><span class="stag">Arduino Mega</span><span class="stag">Arduino Nano</span></div></div>
+      <div class="skill-card reveal"><div class="skill-title"><div class="skill-icon">💻</div>Programming</div><div class="stags"><span class="stag">C</span><span class="stag">Embedded C</span><span class="stag">Python</span><span class="stag">JavaScript</span></div></div>
+      <div class="skill-card reveal"><div class="skill-title"><div class="skill-icon">📡</div>Protocols</div><div class="stags"><span class="stag">UART</span><span class="stag">SPI</span><span class="stag">I2C</span><span class="stag">ESP-NOW</span><span class="stag">OneWire</span></div></div>
+      <div class="skill-card reveal"><div class="skill-title"><div class="skill-icon">🔐</div>Security</div><div class="stags"><span class="stag">AES-256-GCM</span><span class="stag">CRYSTALS-Kyber</span><span class="stag">Dilithium</span><span class="stag">PQC</span></div></div>
+      <div class="skill-card reveal"><div class="skill-title"><div class="skill-icon">🖥️</div>PCB & Design</div><div class="stags"><span class="stag">EasyEDA</span><span class="stag">KiCad</span><span class="stag">Schematic Design</span><span class="stag">PCB Layout</span></div></div>
+      <div class="skill-card reveal"><div class="skill-title"><div class="skill-icon">☁️</div>Backend & Tools</div><div class="stags"><span class="stag">Firebase</span><span class="stag">Supabase</span><span class="stag">Node.js</span><span class="stag">Flask</span><span class="stag">Git</span><span class="stag">GitHub</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects" class="section section-dark">
+<section id="projects" class="section section-alt">
   <div class="container">
-    <div class="sec-label">// 03 PROJECTS</div>
-    <h2 class="sec-title">What I've Built</h2>
+    <div class="sec-chip">// PROJECTS</div>
+    <h2 class="sec-title">What I've <span class="t-accent">Built</span></h2>
     <div class="projects-grid">
 
       <div class="pcard featured reveal">
-        <div class="pbadge">Featured</div>
-        <div class="phead"><div class="picon">🔐</div><div class="plink"><a href="https://github.com/VK-Innovate/QSC_App" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <div class="pcard-head"><div class="pcard-icon">🔐</div><div class="pcard-link"><a href="https://github.com/VK-Innovate/QSC_App" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
         <h3>Quantum Secure Communication App</h3>
         <p>Cross-platform secure messaging with Post-Quantum Cryptography. Implements CRYSTALS-Kyber key exchange, Dilithium signatures, and AES-256-GCM with real-time Supabase sync and ephemeral message expiry.</p>
-        <div class="ptags"><span>React Native</span><span>Node.js</span><span>Supabase</span><span>PQC</span><span>AES-256-GCM</span></div>
+        <div class="ptags"><span class="ptag">React Native</span><span class="ptag">Node.js</span><span class="ptag">Supabase</span><span class="ptag">PQC</span><span class="ptag">AES-256-GCM</span></div>
       </div>
 
       <div class="pcard reveal">
-        <div class="phead"><div class="picon">📡</div><div class="plink"><a href="https://github.com/VK-Innovate/RF-scanner-app" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <div class="pcard-head"><div class="pcard-icon">📡</div><div class="pcard-link"><a href="https://github.com/VK-Innovate/RF-scanner-app" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
         <h3>RF Scanner App</h3>
         <p>Android app + Flask cloud server for real-time WiFi scanning. DNN inference server-side, RSSI/distance live dashboard updated every 30 seconds.</p>
-        <div class="ptags"><span>Python</span><span>Flask</span><span>Kivy</span><span>Android</span><span>DNN</span></div>
+        <div class="ptags"><span class="ptag">Python</span><span class="ptag">Flask</span><span class="ptag">Kivy</span><span class="ptag">Android</span><span class="ptag">DNN</span></div>
       </div>
 
       <div class="pcard reveal">
-        <div class="phead"><div class="picon">🤚</div><div class="plink"><a href="https://github.com/VK-Innovate/dsp-gesture-controller" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <div class="pcard-head"><div class="pcard-icon">🤚</div><div class="pcard-link"><a href="https://github.com/VK-Innovate/dsp-gesture-controller" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
         <h3>DSP Gesture Controller</h3>
-        <p>Hand gesture recognition using Python, MediaPipe and IIR/FIR filters. Controls PC via gestures with 8-frame stability and 2.5s action lock. PowerShell one-liner installer.</p>
-        <div class="ptags"><span>Python</span><span>MediaPipe</span><span>IIR/FIR</span><span>OpenCV</span><span>DSP</span></div>
+        <p>Hand gesture recognition using Python, MediaPipe and IIR/FIR filters. Controls PC via gestures with 8-frame stability and 2.5s action lock.</p>
+        <div class="ptags"><span class="ptag">Python</span><span class="ptag">MediaPipe</span><span class="ptag">IIR/FIR</span><span class="ptag">OpenCV</span></div>
       </div>
 
       <div class="pcard reveal">
-        <div class="phead"><div class="picon">🔒</div><div class="plink"><a href="https://github.com/VK-Innovate/Smart-Biometric-Multi-Lock-IoT-System" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <div class="pcard-head"><div class="pcard-icon">🔒</div><div class="pcard-link"><a href="https://github.com/VK-Innovate/Smart-Biometric-Multi-Lock-IoT-System" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
         <h3>Smart Biometric Multi-Lock</h3>
-        <p>Multi-user fingerprint + PIN system on Arduino Mega. 3 independent solenoid locks, role-based access control, EEPROM credential storage, EasyEDA PCB design.</p>
-        <div class="ptags"><span>Arduino Mega</span><span>EEPROM</span><span>I2C</span><span>EasyEDA</span></div>
+        <p>Multi-user fingerprint + PIN system on Arduino Mega. 3 independent solenoid locks, role-based access control, EEPROM credential storage and EasyEDA PCB design.</p>
+        <div class="ptags"><span class="ptag">Arduino Mega</span><span class="ptag">EEPROM</span><span class="ptag">I2C</span><span class="ptag">EasyEDA</span></div>
       </div>
 
       <div class="pcard reveal">
-        <div class="phead"><div class="picon">⚡</div><div class="plink"><a href="https://github.com/VK-Innovate/Smart-Overvoltage-Protection-System" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
+        <div class="pcard-head"><div class="pcard-icon">⚡</div><div class="pcard-link"><a href="https://github.com/VK-Innovate/Smart-Overvoltage-Protection-System" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
         <h3>Smart Overvoltage Protection</h3>
         <p>Motor protection using MOSFET switching and dual-threshold hysteresis. Automatic cutoff and recovery with ADC-based voltage sensing and I2C LCD display.</p>
-        <div class="ptags"><span>Arduino Nano</span><span>MOSFET</span><span>ADC</span><span>Embedded C</span></div>
+        <div class="ptags"><span class="ptag">Arduino Nano</span><span class="ptag">MOSFET</span><span class="ptag">ADC</span><span class="ptag">Embedded C</span></div>
       </div>
 
       <div class="pcard reveal">
-        <div class="phead"><div class="picon">📶</div><div class="plink"><a href="https://github.com/VK-Innovate/wifi-scanner" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
-        <h3>WiFi Scanner</h3>
-        <p>ESP32-based network scanning tool. Detects nearby access points, shows SSID, BSSID, channel, and RSSI in real time. Built for wireless security auditing.</p>
-        <div class="ptags"><span>ESP32</span><span>Python</span><span>Network Analysis</span></div>
-      </div>
-
-      <div class="pcard reveal">
-        <div class="phead"><div class="picon">🧠</div><div class="plink"><a href="https://github.com/VK-Innovate/ANN-SOM" target="_blank"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a></div></div>
-        <h3>ANN-SOM Neural Clustering</h3>
-        <p>Self-Organizing Map on the Iris dataset using MiniSom. Unsupervised ML, topology preservation, and high-dimensional data visualization in Jupyter.</p>
-        <div class="ptags"><span>Python</span><span>MiniSom</span><span>Jupyter</span><span>ML</span></div>
-      </div>
-
-      <div class="pcard reveal">
-        <div class="phead"><div class="picon">🌿</div><div class="plink"></div></div>
+        <div class="pcard-head"><div class="pcard-icon">🌿</div><div class="pcard-link"></div></div>
         <h3>Smart Animal Weather Monitor</h3>
         <p>Multi-parameter IoT monitoring for livestock shelters. 6 sensors (DHT11, DS18B20, BMP180, MQ135, GP2Y1010, LDR) with OLED display and mixed protocol interfacing.</p>
-        <div class="ptags"><span>ESP32</span><span>I2C</span><span>OneWire</span><span>OLED</span></div>
+        <div class="ptags"><span class="ptag">ESP32</span><span class="ptag">I2C</span><span class="ptag">OneWire</span><span class="ptag">OLED</span></div>
       </div>
 
     </div>
-    <div class="pcta"><a href="https://github.com/VK-Innovate" target="_blank" class="btn-outline">View All on GitHub →</a></div>
+    <div class="projects-cta">
+      <a href="https://github.com/VK-Innovate" target="_blank" class="neo-btn-secondary">View All on GitHub →</a>
+    </div>
   </div>
 </section>
 
 <!-- EDUCATION -->
 <section id="education" class="section">
   <div class="container">
-    <div class="sec-label">// 04 EDUCATION</div>
-    <h2 class="sec-title">Academic Background</h2>
-    <div class="edu-grid">
+    <div class="sec-chip">// EDUCATION</div>
+    <h2 class="sec-title">Academic <span class="t-accent">Background</span></h2>
+    <div class="edu-stack">
       <div class="edu-card reveal">
-        <div class="edu-icon">🎓</div>
+        <div class="edu-card-icon">🎓</div>
         <div>
           <div class="edu-year">2023 — 2027</div>
           <div class="edu-degree">Bachelor of Engineering — Electronics &amp; Communication</div>
@@ -385,33 +721,33 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
         </div>
       </div>
       <div class="edu-card reveal">
-        <div class="edu-icon">📚</div>
+        <div class="edu-card-icon">📚</div>
         <div>
           <div class="edu-year">2020 — 2022</div>
           <div class="edu-degree">Pre-University Course — PCMB</div>
           <div class="edu-inst">JSS Pre-University College, Mysore</div>
-          <div class="edu-score">Percentage: 65.67%</div>
+          <div class="edu-score">65.67%</div>
         </div>
       </div>
       <div class="edu-card reveal">
-        <div class="edu-icon">🏫</div>
+        <div class="edu-card-icon">🏫</div>
         <div>
           <div class="edu-year">2020</div>
           <div class="edu-degree">SSLC — Secondary School Leaving Certificate</div>
           <div class="edu-inst">Karnataka State Board</div>
-          <div class="edu-score">Percentage: 65.44%</div>
+          <div class="edu-score">65.44%</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GITHUB ACTIVITY -->
-<section id="github" class="section section-dark">
+<!-- GITHUB -->
+<section id="github" class="section section-alt">
   <div class="container">
-    <div class="sec-label">// 05 GITHUB</div>
-    <h2 class="sec-title">GitHub Activity</h2>
-    <div class="github-section reveal">
+    <div class="sec-chip">// GITHUB</div>
+    <h2 class="sec-title">GitHub <span class="t-accent">Activity</span></h2>
+    <div class="github-wrap reveal">
       <div class="github-header">
         <h3>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -420,10 +756,10 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
         <a href="https://github.com/VK-Innovate" target="_blank" class="github-link">View Profile ↗</a>
       </div>
       <div class="github-graph">
-        <img src="https://ghchart.rshah.org/00D4FF/VK-Innovate" alt="Varun's GitHub contribution chart" onerror="this.style.display='none'"/>
+        <img src="https://ghchart.rshah.org/7c6fff/VK-Innovate" alt="Varun's GitHub contribution chart" onerror="this.style.display='none'"/>
       </div>
       <div class="github-streak">
-        <img src="https://streak-stats.demolab.com?user=VK-Innovate&theme=transparent&hide_border=true&stroke=1E2D45&ring=00D4FF&fire=00FF88&currStreakNum=E8EDF5&sideNums=E8EDF5&currStreakLabel=00D4FF&sideLabels=7A8BAA&dates=7A8BAA&background=00000000" alt="GitHub Streak Stats" onerror="this.parentElement.style.display='none'"/>
+        <img src="https://streak-stats.demolab.com?user=VK-Innovate&theme=transparent&hide_border=true&stroke=252b3f&ring=7c6fff&fire=50fa7b&currStreakNum=e2e8f8&sideNums=e2e8f8&currStreakLabel=7c6fff&sideLabels=7888aa&dates=7888aa&background=00000000" alt="GitHub Streak" onerror="this.parentElement.style.display='none'"/>
       </div>
       <div class="github-stats">
         <div class="gstat"><div class="gstat-num">7+</div><div class="gstat-label">Repositories</div></div>
@@ -438,117 +774,140 @@ footer{padding:1.3rem 2.5rem;border-top:1px solid var(--border);}
 <!-- CERTIFICATIONS -->
 <section id="certifications" class="section">
   <div class="container">
-    <div class="sec-label">// 06 CERTIFICATIONS & HACKATHONS</div>
-    <h2 class="sec-title">Recognition &amp; Learning</h2>
+    <div class="sec-chip">// CERTIFICATIONS</div>
+    <h2 class="sec-title">Recognition &amp; <span class="t-accent">Learning</span></h2>
     <div class="cert-grid">
       <div class="cert-card reveal"><div class="cert-icon">📘</div><div><div class="cert-platform">Coursera</div><div class="cert-title">Pressure, Force, Motion & Humidity Sensors</div><div class="cert-sub">Sensor fundamentals, IoT, Environmental monitoring</div><a href="https://coursera.org/share/2fc07062b46194be0b2a345dd22ff695" target="_blank" class="cert-link">View Certificate ↗</a></div></div>
       <div class="cert-card reveal"><div class="cert-icon">📊</div><div><div class="cert-platform">Coursera</div><div class="cert-title">Probability and Statistics</div><div class="cert-sub">Statistical analysis, Probability theory</div><a href="https://coursera.org/share/62a70cc47b5f9246bfe71efe38bef3c4" target="_blank" class="cert-link">View Certificate ↗</a></div></div>
       <div class="cert-card reveal"><div class="cert-icon">🌐</div><div><div class="cert-platform">Coursera</div><div class="cert-title">Computer Networks & Network Security</div><div class="cert-sub">Networking fundamentals, Security concepts</div><a href="https://coursera.org/share/390ef51a1946cb846e0359cb7aa44234" target="_blank" class="cert-link">View Certificate ↗</a></div></div>
-      <div class="cert-card hack reveal"><div class="cert-icon">🏆</div><div><div class="cert-platform">Smart India Hackathon</div><div class="cert-title">Hardware Category — SIH</div><div class="cert-sub">AI-based precision pesticide drone with RTK-GPS targeting</div><a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a></div></div>
-      <div class="cert-card hack reveal"><div class="cert-icon">🚀</div><div><div class="cert-platform">Bahubali Engineering College</div><div class="cert-title">Hackathon — Hardware Track</div><div class="cert-sub">Embedded systems and IoT engineering challenge</div><a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a></div></div>
+      <div class="cert-card hackathon reveal"><div class="cert-icon">🏆</div><div><div class="cert-platform">Smart India Hackathon</div><div class="cert-title">Hardware Category — SIH</div><div class="cert-sub">AI-based precision pesticide drone with RTK-GPS targeting</div><a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a></div></div>
+      <div class="cert-card hackathon reveal"><div class="cert-icon">🚀</div><div><div class="cert-platform">Bahubali Engineering College</div><div class="cert-title">Hackathon — Hardware Track</div><div class="cert-sub">Embedded systems and IoT engineering challenge</div><a href="https://github.com/VK-Innovate/Hackathons-and-Competitions" target="_blank" class="cert-link">View on GitHub ↗</a></div></div>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="section section-dark">
+<section id="contact" class="section section-alt">
   <div class="container">
-    <div class="sec-label">// 07 CONTACT</div>
+    <div class="sec-chip">// CONTACT</div>
     <div class="contact-center">
-      <h2>Let's build something<br><span class="accent">together.</span></h2>
+      <h2>Let's build something<br><span style="background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">together.</span></h2>
       <p>I'm actively looking for internship opportunities in IoT, Embedded Systems, and Hardware Engineering. Open to collaborations and project discussions too.</p>
       <div class="contact-cards">
-        <a href="mailto:varunkumarsr43@gmail.com" class="ccard"><div class="ccard-icon">📧</div><div class="ccard-label">Email</div><div class="ccard-val">varunkumarsr43@gmail.com</div></a>
-        <a href="https://github.com/VK-Innovate" target="_blank" class="ccard"><div class="ccard-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></div><div class="ccard-label">GitHub</div><div class="ccard-val">VK-Innovate</div></a>
-        <a href="https://www.linkedin.com/in/vk-innovate/" target="_blank" class="ccard"><div class="ccard-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><div class="ccard-label">LinkedIn</div><div class="ccard-val">vk-innovate</div></a>
-        <a href="varun_resume.pdf" download class="ccard"><div class="ccard-icon">📄</div><div class="ccard-label">Resume</div><div class="ccard-val">Download PDF</div></a>
+        <a href="mailto:varunkumarsr43@gmail.com" class="ccard">
+          <div class="ccard-iconwrap">📧</div>
+          <div class="ccard-label">Email</div>
+          <div class="ccard-val">varunkumarsr43@gmail.com</div>
+        </a>
+        <a href="https://github.com/VK-Innovate" target="_blank" class="ccard">
+          <div class="ccard-iconwrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
+          <div class="ccard-label">GitHub</div>
+          <div class="ccard-val">VK-Innovate</div>
+        </a>
+        <a href="https://www.linkedin.com/in/vk-innovate/" target="_blank" class="ccard">
+          <div class="ccard-iconwrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+          <div class="ccard-label">LinkedIn</div>
+          <div class="ccard-val">vk-innovate</div>
+        </a>
+        <a href="varun_resume.pdf" download class="ccard">
+          <div class="ccard-iconwrap">📄</div>
+          <div class="ccard-label">Resume</div>
+          <div class="ccard-val">Download PDF</div>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="container">
-    <div class="footer-inner">
-      <span>© 2025 Varun Kumar S R</span>
-      <span>ECE Engineer · IoT · Embedded Systems</span>
-      <a href="https://github.com/VK-Innovate" target="_blank">VK-Innovate ↗</a>
-    </div>
+  <div class="footer-inner">
+    <span>© 2025 Varun Kumar S R</span>
+    <span>ECE Engineer · IoT · Embedded Systems</span>
+    <a href="https://github.com/VK-Innovate" target="_blank">VK-Innovate ↗</a>
   </div>
 </footer>
 
 <script>
-// IMAGE FIX — force reload with cache bust if img fails
-const heroImg = document.querySelector("#heroPhoto img");
-if (heroImg) {
-  heroImg.addEventListener("error", function() {
-    // Try with cache-busted URL
-    const cb = "?v=" + Date.now();
-    const tries = ["varun.png" + cb, "./varun.png" + cb, "/varun.png" + cb];
-    let t = 0;
-    const tryNext = () => {
-      if (t < tries.length) { this.src = tries[t++]; }
-    };
-    this.addEventListener("error", tryNext);
-    tryNext();
-  });
-}
-
-// TYPED ROLE
-const roles = ["Embedded Engineer", "IoT Developer", "PCB Designer", "Security Researcher", "Hardware Builder"];
-let ri = 0, ci = 0, deleting = false;
-const roleEl = document.getElementById('typed-role');
-function typeRole() {
-  const current = roles[ri];
-  if (!deleting) {
-    roleEl.textContent = current.slice(0, ++ci);
-    if (ci === current.length) { deleting = true; setTimeout(typeRole, 1800); return; }
-  } else {
-    roleEl.textContent = current.slice(0, --ci);
-    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
-  }
-  setTimeout(typeRole, deleting ? 50 : 90);
+// ===== TYPED ROLE =====
+const roles = ["Embedded Engineer","IoT Developer","PCB Designer","Security Researcher","Hardware Builder"];
+let ri=0,ci=0,deleting=false;
+const roleEl=document.getElementById('typed-role');
+function typeRole(){
+  const cur=roles[ri];
+  if(!deleting){roleEl.textContent=cur.slice(0,++ci);if(ci===cur.length){deleting=true;setTimeout(typeRole,1800);return;}}
+  else{roleEl.textContent=cur.slice(0,--ci);if(ci===0){deleting=false;ri=(ri+1)%roles.length;}}
+  setTimeout(typeRole,deleting?50:90);
 }
 typeRole();
 
-// NAVBAR
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); });
+// ===== NAVBAR =====
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>60));
 
-// HAMBURGER
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+// ===== HAMBURGER =====
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
 
-// REVEAL
-const revealEls = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const idx = [...e.target.parentElement.children].indexOf(e.target);
-      e.target.style.transitionDelay = (idx % 3) * 0.1 + 's';
+// ===== REVEAL =====
+const revEls=document.querySelectorAll('.reveal');
+const revObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx=[...e.target.parentElement.children].indexOf(e.target);
+      e.target.style.transitionDelay=(idx%3)*0.1+'s';
       e.target.classList.add('visible');
-      obs.unobserve(e.target);
+      revObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
-revealEls.forEach(el => obs.observe(el));
+},{threshold:0.1});
+revEls.forEach(el=>revObs.observe(el));
 
-// ACTIVE NAV
-const sections = document.querySelectorAll('section[id]');
-const anchors = document.querySelectorAll('.nav-links a');
-const secObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      anchors.forEach(a => {
+// ===== ACTIVE NAV =====
+const sections=document.querySelectorAll('section[id]');
+const anchors=document.querySelectorAll('.nav-links a');
+const secObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      anchors.forEach(a=>{
         a.classList.remove('active');
-        if (a.getAttribute('href') === '#' + e.target.id) a.classList.add('active');
+        if(a.getAttribute('href')==='#'+e.target.id)a.classList.add('active');
       });
     }
   });
-}, { threshold: 0.4 });
-sections.forEach(s => secObs.observe(s));
+},{threshold:0.4});
+sections.forEach(s=>secObs.observe(s));
+
+// ===== 3D MOUSE TILT on photo =====
+const scene=document.getElementById('photoScene');
+const card=document.getElementById('photo3d');
+if(scene&&card){
+  scene.addEventListener('mousemove',e=>{
+    const r=scene.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-0.5)*2;
+    const y=((e.clientY-r.top)/r.height-0.5)*2;
+    card.style.transform=`rotateY(${x*10}deg) rotateX(${-y*7}deg) translateZ(20px)`;
+  });
+  scene.addEventListener('mouseleave',()=>{
+    card.style.transform='rotateY(0) rotateX(0) translateZ(0)';
+  });
+}
+
+// ===== SKILL CARD 3D tilt =====
+document.querySelectorAll('.skill-card,.pcard').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-0.5)*2;
+    const y=((e.clientY-r.top)/r.height-0.5)*2;
+    card.style.transform=`translateY(-4px) rotateX(${-y*4}deg) rotateY(${x*5}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='';
+  });
+});
 </script>
 </body>
 </html>
+HTMLEOF
+echo "Done — $(wc -c < /home/claude/portfolio_neo.html) bytes" 
